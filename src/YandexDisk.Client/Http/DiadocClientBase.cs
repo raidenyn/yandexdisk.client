@@ -109,7 +109,7 @@ namespace YandexDisk.Client.Http
 
         [ItemCanBeNull]
         private async Task<TResponse> SendAsync<TResponse>([NotNull] HttpRequestMessage request, CancellationToken cancellationToken)
-            where TResponse : class
+            where TResponse : class, new()
         {
             if (request == null)
             {
@@ -121,11 +121,11 @@ namespace YandexDisk.Client.Http
             TResponse response = await ReadResponse<TResponse>(responseMessage);
 
             //If response body is null but ProtocolObjectResponse was requested, 
-            //returns base object with HttpStatusCode
+            //create empty object
             if (response == null &&
-                typeof(ProtocolObjectResponse) == typeof(TResponse))
+                typeof (ProtocolObjectResponse).IsAssignableFrom(typeof (TResponse)))
             {
-                return new ProtocolObjectResponse { HttpStatusCode = responseMessage.StatusCode } as TResponse;
+                response = new TResponse();
             }
 
             //If response is ProtocolObjectResponse, 
@@ -204,7 +204,7 @@ namespace YandexDisk.Client.Http
         [ItemCanBeNull]
         protected Task<TResponse> GetAsync<TParams, TResponse>([NotNull] string relativeUrl, [CanBeNull] TParams parameters, CancellationToken cancellationToken)
             where TParams : class
-            where TResponse : class
+            where TResponse : class, new()
         {
             if (relativeUrl == null)
             {
@@ -221,7 +221,7 @@ namespace YandexDisk.Client.Http
         [ItemCanBeNull]
         private Task<TResponse> RequestAsync<TRequest, TParams, TResponse>([NotNull] string relativeUrl, [CanBeNull] TParams parameters, [CanBeNull] TRequest request, [NotNull] HttpMethod httpMethod, CancellationToken cancellationToken)
             where TRequest : class
-            where TResponse : class
+            where TResponse : class, new()
             where TParams : class
         {
             Uri url = GetUrl(relativeUrl, parameters);
@@ -234,9 +234,9 @@ namespace YandexDisk.Client.Http
         }
 
         [ItemCanBeNull]
-        protected internal Task<TResponse> PostAsync<TRequest, TParams, TResponse>([NotNull] string relativeUrl, [CanBeNull] TParams parameters, [CanBeNull] TRequest request, CancellationToken cancellationToken)
+        protected Task<TResponse> PostAsync<TRequest, TParams, TResponse>([NotNull] string relativeUrl, [CanBeNull] TParams parameters, [CanBeNull] TRequest request, CancellationToken cancellationToken)
             where TRequest : class
-            where TResponse : class
+            where TResponse : class, new()
             where TParams : class
         {
             return RequestAsync<TRequest, TParams, TResponse>(relativeUrl, parameters, request, HttpMethod.Post, cancellationToken);
@@ -245,7 +245,7 @@ namespace YandexDisk.Client.Http
         [ItemCanBeNull]
         protected Task<TResponse> PutAsync<TRequest, TParams, TResponse>([NotNull] string relativeUrl, [CanBeNull] TParams parameters, [CanBeNull] TRequest request, CancellationToken cancellationToken)
             where TRequest : class
-            where TResponse : class
+            where TResponse : class, new()
             where TParams : class
         {
             return RequestAsync<TRequest, TParams, TResponse>(relativeUrl, parameters, request, HttpMethod.Put, cancellationToken);
@@ -254,7 +254,7 @@ namespace YandexDisk.Client.Http
         [ItemCanBeNull]
         protected Task<TResponse> DeleteAsync<TRequest, TParams, TResponse>([NotNull] string relativeUrl, [CanBeNull] TParams parameters, [CanBeNull] TRequest request, CancellationToken cancellationToken)
             where TRequest : class
-            where TResponse : class
+            where TResponse : class, new()
             where TParams : class
         {
             return RequestAsync<TRequest, TParams, TResponse>(relativeUrl, parameters, request, HttpMethod.Delete, cancellationToken);

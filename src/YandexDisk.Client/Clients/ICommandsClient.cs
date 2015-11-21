@@ -16,32 +16,32 @@ namespace YandexDisk.Client.Clients
         /// <summary>
         /// Create folder on Disk
         /// </summary>
-        [PublicAPI, NotNull]
+        [PublicAPI, ItemNotNull]
         Task<Link> CreateDictionaryAsync([NotNull] string path, CancellationToken cancellationToken);
 
         /// <summary>
         /// Copy fileor folder on Disk from one path to another
         /// </summary>
-        [PublicAPI, NotNull]
-        Task<Link> CopyAsync(CopyFileRequest request, CancellationToken cancellationToken);
+        [PublicAPI, ItemNotNull]
+        Task<Link> CopyAsync([NotNull] CopyFileRequest request, CancellationToken cancellationToken);
 
         /// <summary>
         /// Move file or folder on Disk from one path to another
         /// </summary>
-        [PublicAPI, NotNull]
-        Task<Link> MoveAsync(MoveFileRequest request, CancellationToken cancellationToken);
+        [PublicAPI, ItemNotNull]
+        Task<Link> MoveAsync([NotNull] MoveFileRequest request, CancellationToken cancellationToken);
 
         /// <summary>
         /// Delete file or folder on Disk
         /// </summary>
-        [PublicAPI, NotNull]
-        Task<Link> DeleteAsync(DeleteFileRequest request, CancellationToken cancellationToken);
+        [PublicAPI, ItemNotNull]
+        Task<Link> DeleteAsync([NotNull] DeleteFileRequest request, CancellationToken cancellationToken);
 
         /// <summary>
         /// Return status of operation
         /// </summary>
-        [PublicAPI, NotNull]
-        Task<Operation> GetOperationStatus(Link link, CancellationToken cancellationToken);
+        [PublicAPI, ItemNotNull]
+        Task<Operation> GetOperationStatus([NotNull] Link link, CancellationToken cancellationToken);
     }
 
 
@@ -51,7 +51,7 @@ namespace YandexDisk.Client.Clients
     [PublicAPI]
     public static class CommandsClientExtensions
     {
-        private static async Task WaitOperationAsync(this ICommandsClient client, Link operationLink, CancellationToken cancellationToken, int pullPeriod)
+        private static async Task WaitOperationAsync([NotNull] this ICommandsClient client, [NotNull] Link operationLink, CancellationToken cancellationToken, int pullPeriod)
         {
             Operation operation;
             do
@@ -66,7 +66,7 @@ namespace YandexDisk.Client.Clients
         /// Copy file or folder on Disk from one path to another and wait until operation is done
         /// </summary>
         /// <returns></returns>
-        public static async Task CopyAndWaitAsync(this ICommandsClient client, CopyFileRequest request, CancellationToken cancellationToken, int pullPeriod = 3)
+        public static async Task CopyAndWaitAsync([NotNull] this ICommandsClient client, [NotNull] CopyFileRequest request, CancellationToken cancellationToken, int pullPeriod = 3)
         {
             var link = await client.CopyAsync(request, cancellationToken);
 
@@ -80,7 +80,7 @@ namespace YandexDisk.Client.Clients
         /// Move file or folder on Disk from one path to another and wait until operation is done
         /// </summary>
         /// <returns></returns>
-        public static async Task MoveAndWaitAsync(this ICommandsClient client, MoveFileRequest request, CancellationToken cancellationToken, int pullPeriod = 3)
+        public static async Task MoveAndWaitAsync([NotNull] this ICommandsClient client, [NotNull] MoveFileRequest request, CancellationToken cancellationToken, int pullPeriod = 3)
         {
             var link = await client.MoveAsync(request, cancellationToken);
 
@@ -94,7 +94,7 @@ namespace YandexDisk.Client.Clients
         /// Delete file or folder on Disk and wait until operation is done
         /// </summary>
         /// <returns></returns>
-        public static async Task DeleteAndWaitAsync(this ICommandsClient client, DeleteFileRequest request, CancellationToken cancellationToken, int pullPeriod = 3)
+        public static async Task DeleteAndWaitAsync([NotNull] this ICommandsClient client, [NotNull] DeleteFileRequest request, CancellationToken cancellationToken, int pullPeriod = 3)
         {
             var link = await client.DeleteAsync(request, cancellationToken);
 
