@@ -260,6 +260,15 @@ namespace YandexDisk.Client.Http
             return RequestAsync<TRequest, TParams, TResponse>(relativeUrl, parameters, request, HttpMethod.Delete, cancellationToken);
         }
 
+        [ItemCanBeNull]
+        protected Task<TResponse> PatchAsync<TRequest, TParams, TResponse>([NotNull] string relativeUrl, [CanBeNull] TParams parameters, [CanBeNull] TRequest request, CancellationToken cancellationToken)
+            where TRequest : class
+            where TResponse : class, new()
+            where TParams : class
+        {
+            return RequestAsync<TRequest, TParams, TResponse>(relativeUrl, parameters, request, new HttpMethod("PATCH"), cancellationToken);
+        }
+
         private async Task EnsureSuccessStatusCode([NotNull] HttpResponseMessage response)
         {
             if (!response.IsSuccessStatusCode)

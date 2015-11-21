@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,7 +15,11 @@ namespace YandexDisk.Client.Tests
         [Test]
         public async Task GetDiskInfoTest()
         {
-            var httpClientTest = new TestHttpClient("GET", TestHttpClient.BaseUrl + "", HttpStatusCode.OK, @"
+            var httpClientTest = new TestHttpClient(
+                methodName: "GET", 
+                url: TestHttpClient.BaseUrl + "", 
+                httpStatusCode: HttpStatusCode.OK, 
+                result: @"
 {
   ""trash_size"": 4631577437,
   ""total_space"": 319975063552,
@@ -46,7 +52,11 @@ namespace YandexDisk.Client.Tests
         [Test]
         public async Task GetInfoTest()
         {
-            var httpClientTest = new TestHttpClient("GET", TestHttpClient.BaseUrl + "resources?sort=name&path=/&limit=20&offset=0", HttpStatusCode.OK, @"
+            var httpClientTest = new TestHttpClient(
+                methodName: "GET", 
+                url: TestHttpClient.BaseUrl + "resources?sort=name&path=/&limit=20&offset=0", 
+                httpStatusCode: HttpStatusCode.OK,
+                result: @"
 {
   ""public_key"": ""HQsmHLoeyBlJf8Eu1jlmzuU+ZaLkjPkgcvmokRUCIo8="",
   ""_embedded"": {
@@ -140,7 +150,11 @@ namespace YandexDisk.Client.Tests
         [Test]
         public async Task GetTrashInfoTest()
         {
-            var httpClientTest = new TestHttpClient("GET", TestHttpClient.BaseUrl + "trash/resources?path=/foo/cat.png&limit=30&offset=50", HttpStatusCode.OK, @"
+            var httpClientTest = new TestHttpClient(
+                methodName: "GET", 
+                url: TestHttpClient.BaseUrl + "trash/resources?path=/foo/cat.png&limit=30&offset=50", 
+                httpStatusCode: HttpStatusCode.OK,
+                result: @"
 {
   ""preview"": ""https://downloader.disk.yandex.ru/preview/..."",
   ""name"": ""cat.png"",
@@ -185,7 +199,11 @@ namespace YandexDisk.Client.Tests
         [Test]
         public async Task GetFilesInfoTest()
         {
-            var httpClientTest = new TestHttpClient("GET", TestHttpClient.BaseUrl + @"resources/files?media_type=""audio,compressed""&limit=30&offset=50", HttpStatusCode.OK, @"
+            var httpClientTest = new TestHttpClient(
+                methodName: "GET", 
+                url: TestHttpClient.BaseUrl + @"resources/files?media_type=""audio,compressed""&limit=30&offset=50",
+                httpStatusCode: HttpStatusCode.OK, 
+                result: @"
 {
   ""items"": [
     {
@@ -260,7 +278,11 @@ namespace YandexDisk.Client.Tests
         [Test]
         public async Task GetLastUploadedInfoTest()
         {
-            var httpClientTest = new TestHttpClient("GET", TestHttpClient.BaseUrl + @"resources/last-uploaded?media_type=""audio,executable""&limit=20", HttpStatusCode.OK, @"
+            var httpClientTest = new TestHttpClient(
+                methodName: "GET", 
+                url: TestHttpClient.BaseUrl + @"resources/last-uploaded?media_type=""audio,executable""&limit=20", 
+                httpStatusCode: HttpStatusCode.OK,
+                result: @"
 {
   ""items"": [
       {
@@ -327,6 +349,70 @@ namespace YandexDisk.Client.Tests
             Assert.AreEqual(34567, secondItem.Size);
             Assert.AreEqual(new DateTime(2014, 04, 21, 14, 57, 13, DateTimeKind.Local), secondItem.Created);
             Assert.AreEqual(new DateTime(2014, 04, 21, 14, 57, 14, DateTimeKind.Local), secondItem.Modified);
+        }
+
+
+        [Test]
+        public async Task AppendCustomPropertiesTest()
+        {
+            var httpClientTest = new TestHttpClient(
+                methodName: "PATCH",
+                url: TestHttpClient.BaseUrl + @"resources?path=/foo",
+                httpStatusCode: HttpStatusCode.OK,
+                request: @"{""custom_properties"":{""foo"":""1"",""bar"":""2""}}",
+                result: @"
+{
+  ""public_key"": ""HQsmHLoeyBlJf8Eu1jlmzuU+ZaLkjPkgcvmokRUCIo8="",
+  ""_embedded"": {
+    ""sort"": """",
+    ""path"": ""disk:/foo"",
+    ""items"": [
+      {
+        ""path"": ""disk:/foo/bar"",
+        ""type"": ""dir"",
+        ""name"": ""bar"",
+        ""modified"": ""2014-04-22T10:32:49+04:00"",
+        ""created"": ""2014-04-22T10:32:49+04:00""
+      },
+      {
+        ""name"": ""photo.png"",
+        ""preview"": ""https://downloader.disk.yandex.ru/preview/..."",
+        ""created"": ""2014-04-21T14:57:13+04:00"",
+        ""modified"": ""2014-04-21T14:57:14+04:00"",
+        ""path"": ""disk:/foo/photo.png"",
+        ""md5"": ""4334dc6379c8f95ddf11b9508cfea271"",
+        ""type"": ""file"",
+        ""mime_type"": ""image/png"",
+        ""size"": 34567
+      }
+    ],
+    ""limit"": 20,
+    ""offset"": 0
+  },
+  ""name"": ""foo"",
+  ""created"": ""2014-04-21T14:54:42+04:00"",
+  ""custom_properties"": {""foo"":""1"", ""bar"":""2""},
+  ""public_url"": ""https://yadi.sk/d/2AEJCiNTZGiYX"",
+  ""modified"": ""2014-04-22T10:32:49+04:00"",
+  ""path"": ""disk:/foo"",
+  ""type"": ""dir""
+}
+");
+
+            var diskClient = new DiskHttpApi(TestHttpClient.BaseUrl,
+                                             TestHttpClient.ApiKey,
+                                             logSaver: null,
+                                             httpClient: httpClientTest);
+
+            Resource result = await diskClient.MetaInfo.AppendCustomProperties("/foo", new Dictionary<string, string>  {
+                { "foo", "1" },
+                { "bar", "2" }
+            }, CancellationToken.None);
+
+            Assert.NotNull(result);
+            Assert.IsNotEmpty(result.CustomProperties);
+            Assert.AreEqual("1", result.CustomProperties["foo"]);
+            Assert.AreEqual("2", result.CustomProperties["bar"]);
         }
     }
 }

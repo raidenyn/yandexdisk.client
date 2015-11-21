@@ -1,4 +1,6 @@
-﻿using System.Threading;
+﻿using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Threading;
 using System.Threading.Tasks;
 using YandexDisk.Client.Clients;
 using YandexDisk.Client.Protocol;
@@ -34,6 +36,11 @@ namespace YandexDisk.Client.Http.Clients
         public Task<LastUploadedResourceList> GetLastUploadedInfoAsync(LastUploadedResourceRequest request, CancellationToken cancellationToken)
         {
             return GetAsync<LastUploadedResourceRequest, LastUploadedResourceList>("resources/last-uploaded", request, cancellationToken);
+        }
+
+        public Task<Resource> AppendCustomProperties(string path, IDictionary<string, string> customProperties, CancellationToken cancellationToken)
+        {
+            return PatchAsync<object, object, Resource>("resources", new { path }, new { customProperties }, cancellationToken);
         }
     }
 }

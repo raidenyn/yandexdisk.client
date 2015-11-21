@@ -13,7 +13,11 @@ namespace YandexDisk.Client.Tests
         [Test]
         public async Task GetUploadLinkTest()
         {
-            var httpClientTest = new TestHttpClient("GET", TestHttpClient.BaseUrl + "resources/upload?path=/&overwrite=true", HttpStatusCode.OK, @"
+            var httpClientTest = new TestHttpClient(
+                methodName: "GET", 
+                url: TestHttpClient.BaseUrl + "resources/upload?path=/&overwrite=true", 
+                httpStatusCode: HttpStatusCode.OK,
+                result:  @"
 {
   ""href"": ""https://uploader1d.dst.yandex.net:443/upload-target/..."",
   ""method"": ""PUT"",
@@ -44,7 +48,11 @@ namespace YandexDisk.Client.Tests
                 Templated = false
             };
 
-            var httpClientTest = new TestHttpClient(link.Method, link.Href, HttpStatusCode.Created, @"");
+            var httpClientTest = new TestHttpClient(
+                methodName: link.Method, 
+                url: link.Href, 
+                httpStatusCode: HttpStatusCode.Created, 
+                result: @"");
 
             var diskClient = new DiskHttpApi(TestHttpClient.BaseUrl,
                                              TestHttpClient.ApiKey,
@@ -57,7 +65,11 @@ namespace YandexDisk.Client.Tests
         [Test]
         public async Task GetDownloadLinkTest()
         {
-            var httpClientTest = new TestHttpClient("GET", TestHttpClient.BaseUrl + "resources/download?path=/file.txt", HttpStatusCode.OK, @"
+            var httpClientTest = new TestHttpClient(
+                methodName: "GET", 
+                url: TestHttpClient.BaseUrl + "resources/download?path=/file.txt", 
+                httpStatusCode: HttpStatusCode.OK,
+                result: @"
 {
   ""href"": ""https://downloader.dst.yandex.ru/disk/..."",
   ""method"": ""GET"",
@@ -88,7 +100,11 @@ namespace YandexDisk.Client.Tests
                 Templated = false
             };
 
-            var httpClientTest = new TestHttpClient(link.Method, link.Href, HttpStatusCode.Created, @"Test file content");
+            var httpClientTest = new TestHttpClient(
+                methodName: link.Method, 
+                url: link.Href, 
+                httpStatusCode: HttpStatusCode.Created, 
+                result: @"Test file content");
 
             var diskClient = new DiskHttpApi(TestHttpClient.BaseUrl,
                                              TestHttpClient.ApiKey,

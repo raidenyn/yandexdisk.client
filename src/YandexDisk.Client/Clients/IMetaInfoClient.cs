@@ -1,4 +1,6 @@
-﻿using System.Threading;
+﻿using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
 using YandexDisk.Client.Protocol;
@@ -35,5 +37,10 @@ namespace YandexDisk.Client.Clients
         /// Last uploaded file list on Disk
         /// </summary>
         Task<LastUploadedResourceList> GetLastUploadedInfoAsync([NotNull] LastUploadedResourceRequest request, CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Append custom properties to resource
+        /// </summary>
+        Task<Resource> AppendCustomProperties([NotNull] string path, [NotNull] IDictionary<string, string> properties, CancellationToken cancellationToken);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Newtonsoft.Json;
 
 namespace YandexDisk.Client.Protocol
@@ -75,10 +76,10 @@ namespace YandexDisk.Client.Protocol
         public DateTime Modified { get; set; }
 
         /// <summary>
-        /// Объект со всеми атрибутами, заданными с помощью запроса Добавление метаинформации для ресурса. Содержит только ключи вида имя:значение (объекты или массивы содержать не может).
+        /// Объект со всеми атрибутами, заданными с помощью запроса Добавление метаинформации для ресурса. 
+        /// Содержит только ключи вида имя:значение (объекты или массивы содержать не может).
         /// </summary>
-        [JsonIgnore] //Пока не поддерживаем
-        public object CustomProperties { get; set; }
+        public Dictionary<string, string> CustomProperties { get; set; }
 
         /// <summary>
         /// Ресурсы, непосредственно содержащиеся в папке (содержит объект ResourceList).

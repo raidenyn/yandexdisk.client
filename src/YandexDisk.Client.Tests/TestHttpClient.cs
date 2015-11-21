@@ -12,6 +12,7 @@ namespace YandexDisk.Client.Tests
     {
         private readonly string _methodName;
         private readonly string _url;
+        private readonly string _request;
         private readonly HttpStatusCode _httpStatusCode;
         private readonly string _result;
 
@@ -20,25 +21,33 @@ namespace YandexDisk.Client.Tests
 
         public TestHttpClient(string methodName,
                               string url,
-                              HttpStatusCode httpStatusCode,
-                              string result)
+                              string request = null,
+                              HttpStatusCode httpStatusCode = HttpStatusCode.OK,
+                              string result = null)
         {
             _methodName = methodName;
             _url = url;
+            _request = request;
             _httpStatusCode = httpStatusCode;
             _result = result;
         }
 
-        public Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+        public async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
             Assert.NotNull(request);
             Assert.AreEqual(_methodName, request.Method.Method);
             Assert.AreEqual(_url, request.RequestUri.ToString());
 
-            return Task.FromResult(new HttpResponseMessage(_httpStatusCode)
+            if (request.Content != null && _request != null)
+            {
+                Assert.AreEqual(_request, await request.Content.ReadAsStringAsync());
+            }
+            
+
+            return new HttpResponseMessage(_httpStatusCode)
             {
                 Content = new StringContent(_result, Encoding.UTF8, "text/json")
-            });
+            };
         }
 
         public void Dispose() { }
