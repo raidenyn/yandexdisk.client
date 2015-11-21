@@ -7,7 +7,7 @@
         <authors>Yuriy Nagaev</authors>
         <licenseUrl>https://github.com/raidenyn/yandexdisk.client/blob/master/LICENSE</licenseUrl>
         <projectUrl>https://github.com/raidenyn/yandexdisk.client</projectUrl>
-        <iconUrl>https://github.com/raidenyn/yandexdisk.client/blob/master/icon.png</iconUrl>
+        <iconUrl>https://raw.githubusercontent.com/raidenyn/yandexdisk.client/master/icon.png</iconUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>.NET library wrapper of Yandex Desktop RestAPI.
 See https://tech.yandex.ru/disk/</description>
