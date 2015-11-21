@@ -2,9 +2,12 @@
 
 [Yandex Disk Rest API](https://tech.yandex.ru/disk/rest/) client library for .NET 4.6
 
+[![yandexdisk-client MyGet Build Status](https://www.myget.org/BuildSource/Badge/yandexdisk-client?identifier=8a8dfc85-9089-404c-a42e-93dabef1cb25)](https://www.myget.org/)
+
 ## How to use
 
 Example of uploading file to Yandex Disk
+
 ```C#
 async Task UploadSample()
 {
@@ -23,7 +26,9 @@ async Task UploadSample()
 }
 ```
 
+
 Example of downloading files from Yandex Disk
+
 ```C#
 async Task DownloadAllFilesInFolder(IDiskApi diskApi)
 {
