@@ -69,6 +69,7 @@
     <Compile Include="Http\Serialization\PropertyResolver.cs" />
     <Compile Include="Http\Serialization\ValueSerializer.cs" />
     <Compile Include="Http\Serialization\SnakeCasePropertyNamesContractResolver.cs" />
+    <Compile Include="Protocol\RestoreFromTrashRequest.cs" />
     <Compile Include="Protocol\DeleteFileRequest.cs" />
     <Compile Include="Protocol\MoveFileRequest.cs" />
     <Compile Include="Protocol\CopyFileRequest.cs" />

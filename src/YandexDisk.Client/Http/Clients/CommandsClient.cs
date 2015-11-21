@@ -33,6 +33,16 @@ namespace YandexDisk.Client.Http.Clients
             return DeleteAsync<CopyFileRequest, object, Link>("resources", request, /*requestBody*/ null, cancellationToken);
         }
 
+        public Task<Link> EmptyTrashAsync(string path, CancellationToken cancellationToken)
+        {
+            return DeleteAsync<object, object, Link>("trash/resources", new { path }, /*requestBody*/ null, cancellationToken);
+        }
+
+        public Task<Link> RestoreFromTrashAsync(RestoreFromTrashRequest request, CancellationToken cancellationToken)
+        {
+            return PutAsync<RestoreFromTrashRequest, object, Link>("trash/resources", request, /*requestBody*/ null, cancellationToken);
+        }
+
         public async Task<Operation> GetOperationStatus(Link link, CancellationToken cancellationToken)
         {
             var url = new Uri(link.Href);

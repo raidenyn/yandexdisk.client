@@ -119,6 +119,58 @@ namespace YandexDisk.Client.Tests
         }
 
         [Test]
+        public async Task EmptyTrashTest()
+        {
+            var httpClientTest = new TestHttpClient("DELETE", TestHttpClient.BaseUrl + "trash/resources?path=/foo", HttpStatusCode.Accepted, @"
+{
+  ""href"": ""https://cloud-api.yandex.net/v1/disk/operations?id=d80c269ce4eb16c0207f0a15t4a31415313452f9e950cd9576f36b1146ee0e42"",
+  ""method"": ""GET"",
+  ""templated"": false
+}
+");
+
+            var diskClient = new DiskHttpApi(TestHttpClient.BaseUrl,
+                                             TestHttpClient.ApiKey,
+                                             logSaver: null,
+                                             httpClient: httpClientTest);
+
+            Link result = await diskClient.Commands.EmptyTrashAsync(path: "/foo", cancellationToken: CancellationToken.None);
+
+            Assert.NotNull(result);
+            Assert.AreEqual("https://cloud-api.yandex.net/v1/disk/operations?id=d80c269ce4eb16c0207f0a15t4a31415313452f9e950cd9576f36b1146ee0e42", result.Href);
+            Assert.AreEqual("GET", result.Method);
+            Assert.AreEqual(false, result.Templated);
+        }
+
+        [Test]
+        public async Task RestoreFromTrashTest()
+        {
+            var httpClientTest = new TestHttpClient("PUT", TestHttpClient.BaseUrl + "trash/resources?path=/foo&name=baz&overwrite=false", HttpStatusCode.OK, @"
+{
+  ""href"": ""https://cloud-api.yandex.net/v1/disk/resources?path=disk%3A%2Fbar%2Fselfie.png"",
+  ""method"": ""GET"",
+  ""templated"": false
+}
+");
+
+            var diskClient = new DiskHttpApi(TestHttpClient.BaseUrl,
+                                             TestHttpClient.ApiKey,
+                                             logSaver: null,
+                                             httpClient: httpClientTest);
+
+            Link result = await diskClient.Commands.RestoreFromTrashAsync(new RestoreFromTrashRequest
+            {
+                Path = "/foo",
+                Name = "baz"
+            }, CancellationToken.None);
+
+            Assert.NotNull(result);
+            Assert.AreEqual("https://cloud-api.yandex.net/v1/disk/resources?path=disk%3A%2Fbar%2Fselfie.png", result.Href);
+            Assert.AreEqual("GET", result.Method);
+            Assert.AreEqual(false, result.Templated);
+        }
+
+        [Test]
         public async Task GetOperationStatusTest()
         {
             var httpClientTest = new TestHttpClient("GET", TestHttpClient.BaseUrl + "operations/d80c269ce4eb16c0207f0a15t4a31415313452f9e950cd9576f36b1146ee0e42", HttpStatusCode.OK, @"

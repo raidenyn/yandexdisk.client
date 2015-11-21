@@ -8,7 +8,7 @@ using YandexDisk.Client.Protocol;
 namespace YandexDisk.Client.Clients
 {
     /// <summary>
-    /// Existing on Disk file operations
+    /// Disk file operations
     /// </summary>
     [PublicAPI]
     public interface ICommandsClient
@@ -36,6 +36,18 @@ namespace YandexDisk.Client.Clients
         /// </summary>
         [PublicAPI, ItemNotNull]
         Task<Link> DeleteAsync([NotNull] DeleteFileRequest request, CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Delete files in trash
+        /// </summary>
+        [PublicAPI, ItemNotNull]
+        Task<Link> EmptyTrashAsync([NotNull] string path, CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Delete files in trash
+        /// </summary>
+        [PublicAPI, ItemNotNull]
+        Task<Link> RestoreFromTrashAsync([NotNull] RestoreFromTrashRequest request, CancellationToken cancellationToken);
 
         /// <summary>
         /// Return status of operation
@@ -97,6 +109,34 @@ namespace YandexDisk.Client.Clients
         public static async Task DeleteAndWaitAsync([NotNull] this ICommandsClient client, [NotNull] DeleteFileRequest request, CancellationToken cancellationToken, int pullPeriod = 3)
         {
             var link = await client.DeleteAsync(request, cancellationToken);
+
+            if (link.HttpStatusCode == HttpStatusCode.Accepted)
+            {
+                await client.WaitOperationAsync(link, cancellationToken, pullPeriod);
+            }
+        }
+
+        /// <summary>
+        /// Empty trash
+        /// </summary>
+        /// <returns></returns>
+        public static async Task EmptyTrashAndWaitAsyncAsync([NotNull] this ICommandsClient client, [NotNull] string path, CancellationToken cancellationToken, int pullPeriod = 3)
+        {
+            var link = await client.EmptyTrashAsync(path, cancellationToken);
+
+            if (link.HttpStatusCode == HttpStatusCode.Accepted)
+            {
+                await client.WaitOperationAsync(link, cancellationToken, pullPeriod);
+            }
+        }
+
+        /// <summary>
+        /// Restore files from trash
+        /// </summary>
+        /// <returns></returns>
+        public static async Task RestoreFromTrashAndWaitAsyncAsync([NotNull] this ICommandsClient client, [NotNull] RestoreFromTrashRequest request, CancellationToken cancellationToken, int pullPeriod = 3)
+        {
+            var link = await client.RestoreFromTrashAsync(request, cancellationToken);
 
             if (link.HttpStatusCode == HttpStatusCode.Accepted)
             {
