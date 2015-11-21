@@ -5,7 +5,7 @@ namespace YandexDisk.Client.Protocol
     /// <summary>
     /// Список ресурсов, содержащихся в папке. Содержит объекты Resource и свойства списка.
     /// </summary>
-    public class ResourceList
+    public class ResourceList : ProtocolObjectResponse
     {
         /// <summary>
         /// Поле, по которому отсортирован список.

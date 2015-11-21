@@ -69,8 +69,12 @@
     <Compile Include="Http\Serialization\PropertyResolver.cs" />
     <Compile Include="Http\Serialization\ValueSerializer.cs" />
     <Compile Include="Http\Serialization\SnakeCasePropertyNamesContractResolver.cs" />
+    <Compile Include="Protocol\DeleteFileRequest.cs" />
+    <Compile Include="Protocol\MoveFileRequest.cs" />
+    <Compile Include="Protocol\CopyFileRequest.cs" />
     <Compile Include="Protocol\FilesResourceRequest.cs" />
     <Compile Include="Protocol\MediaType.cs" />
+    <Compile Include="Protocol\ProtocolObjectResponse.cs" />
     <Compile Include="Protocol\ResourceRequest.cs" />
     <Compile Include="Protocol\ErrorDescription.cs" />
     <Compile Include="Protocol\Operation.cs" />

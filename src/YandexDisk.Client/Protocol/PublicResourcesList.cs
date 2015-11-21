@@ -5,7 +5,7 @@ namespace YandexDisk.Client.Protocol
     /// <summary>
     /// Список опубликованных файлов на Диске.
     /// </summary>
-    public class PublicResourcesList
+    public class PublicResourcesList : ProtocolObjectResponse
     {
         /// <summary>
         /// Массив ресурсов (Resource), содержащихся в папке.

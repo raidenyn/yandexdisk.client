@@ -6,22 +6,22 @@ using YandexDisk.Client.Protocol;
 namespace YandexDisk.Client.Clients
 {
     /// <summary>
-    /// Метаинформация о файле или папке
+    /// Files and folder metadata client
     /// </summary>
     public interface IMetaInfoClient
     {
         /// <summary>
-        /// Метаинформация о файле или папке
+        /// Return files or folder metadata
         /// </summary>
         Task<Resource> GetInfoAsync([NotNull] ResourceRequest request, CancellationToken cancellationToken);
 
         /// <summary>
-        /// Метаинформация о файле или папке в корзине
+        /// Return files or folder metadata in the trash
         /// </summary>
         Task<Resource> GetTrashInfoAsync([NotNull] ResourceRequest request, CancellationToken cancellationToken);
 
         /// <summary>
-        /// Плоский список всех файлов
+        /// Flat file list on Disk
         /// </summary>
         Task<FilesResourceList> GetFilesInfoAsync([NotNull] FilesResourceRequest request, CancellationToken cancellationToken);
     }

@@ -5,7 +5,7 @@ namespace YandexDisk.Client.Protocol
     /// <summary>
     /// Список последних добавленных на Диск файлов, отсортированных по дате загрузки (от поздних к ранним).
     /// </summary>
-    public class LastUploadedResourceList
+    public class LastUploadedResourceList : ProtocolObjectResponse
     {
         /// <summary>
         /// Массив ресурсов (Resource), содержащихся в папке.

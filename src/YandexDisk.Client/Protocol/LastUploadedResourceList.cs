@@ -5,7 +5,7 @@ namespace YandexDisk.Client.Protocol
     /// <summary>
     /// Плоский список всех файлов на Диске в алфавитном порядке.
     /// </summary>
-    public class FilesResourceList
+    public class FilesResourceList : ProtocolObjectResponse
     {
         /// <summary>
         /// Массив ресурсов (Resource), содержащихся в папке.

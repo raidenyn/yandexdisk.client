@@ -6,7 +6,7 @@ namespace YandexDisk.Client.Protocol
     /// <summary>
     /// Описание ресурса, мета-информация о файле или папке. Включается в ответ на запрос метаинформации.
     /// </summary>
-    public class Resource
+    public class Resource : ProtocolObjectResponse
     {
         /// <summary>
         /// Ключ опубликованного ресурса.

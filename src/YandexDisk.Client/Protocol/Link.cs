@@ -1,12 +1,9 @@
-﻿using System.Linq;
-using System.Reflection;
-
-namespace YandexDisk.Client.Protocol
+﻿namespace YandexDisk.Client.Protocol
 {
     /// <summary>
     /// Объект содержит URL для запроса метаданных ресурса.
     /// </summary>
-    public class Link
+    public class Link: ProtocolObjectResponse
     {
         /// <summary>
         /// URL. Может быть шаблонизирован, см. ключ templated.

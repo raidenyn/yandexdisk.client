@@ -18,7 +18,7 @@ namespace YandexDisk.Client.Http
     {
         private static readonly QueryParamsSerializer MvcSerializer = new QueryParamsSerializer();
 
-        public readonly MediaTypeFormatter[] DefaultFormatters =
+        private readonly MediaTypeFormatter[] _defaultFormatters =
         {
             new JsonMediaTypeFormatter
             {
@@ -34,7 +34,7 @@ namespace YandexDisk.Client.Http
 
         private readonly IHttpClient _httpClient;
         private readonly ILogSaver _logSaver;
-        public readonly Uri BaseUrl;
+        private readonly Uri _baseUrl;
 
         protected DiadocClientBase([NotNull] ApiContext apiContext)
         {
@@ -53,18 +53,18 @@ namespace YandexDisk.Client.Http
 
             _httpClient = apiContext.HttpClient;
             _logSaver = apiContext.LogSaver;
-            BaseUrl = apiContext.BaseUrl;
+            _baseUrl = apiContext.BaseUrl;
         }
 
         [NotNull]
-        protected Uri GetUrl([NotNull] string relativeUrl, [CanBeNull] object request = null)
+        private Uri GetUrl([NotNull] string relativeUrl, [CanBeNull] object request = null)
         {
             if (relativeUrl == null)
             {
                 throw new ArgumentNullException(nameof(relativeUrl));
             }
 
-            var uriBuilder = new UriBuilder(BaseUrl);
+            var uriBuilder = new UriBuilder(_baseUrl);
             uriBuilder.Path += relativeUrl;
 
             if (request != null)
@@ -75,29 +75,9 @@ namespace YandexDisk.Client.Http
             return uriBuilder.Uri;
         }
 
-        [CanBeNull]
-        protected string BuildPath([CanBeNull] string relativeUrlTemplate, [NotNull] params string[] values)
-        {
-            if (String.IsNullOrWhiteSpace(relativeUrlTemplate))
-            {
-                return relativeUrlTemplate;
-            }
-            if (values == null)
-            {
-                throw new ArgumentNullException(nameof(values));
-            }
-
-            for (var i = 0; i < values.Length; i++)
-            {
-                values[i] = Uri.EscapeDataString(values[i]);
-            }
-
-            // ReSharper disable once CoVariantArrayConversion
-            return String.Format(relativeUrlTemplate, values);
-        }
 
         [CanBeNull]
-        protected HttpContent GetContent<TRequest>([CanBeNull] TRequest request)
+        private HttpContent GetContent<TRequest>([CanBeNull] TRequest request)
             where TRequest : class
         {
             if (request == null)
@@ -118,17 +98,17 @@ namespace YandexDisk.Client.Http
                 return new StreamContent(request as Stream);
             }
 
-            return new ObjectContent<TRequest>(request, DefaultFormatters.First());
+            return new ObjectContent<TRequest>(request, _defaultFormatters.First());
         }
 
         [NotNull]
-        protected internal virtual ILogger GetLogger()
+        private ILogger GetLogger()
         {
             return LoggerFactory.GetLogger(_logSaver);
         }
 
-        [ItemNotNull]
-        protected internal async Task<TResponse> SendAsync<TResponse>([NotNull] HttpRequestMessage request, CancellationToken cancellationToken)
+        [ItemCanBeNull]
+        private async Task<TResponse> SendAsync<TResponse>([NotNull] HttpRequestMessage request, CancellationToken cancellationToken)
             where TResponse : class
         {
             if (request == null)
@@ -136,13 +116,31 @@ namespace YandexDisk.Client.Http
                 throw new ArgumentNullException(nameof(request));
             }
 
-            HttpResponseMessage response = await SendAsync(request, cancellationToken);
+            HttpResponseMessage responseMessage = await SendAsync(request, cancellationToken);
 
-            return await ReadResponse<TResponse>(response);
+            TResponse response = await ReadResponse<TResponse>(responseMessage);
+
+            //If response body is null but ProtocolObjectResponse was requested, 
+            //returns base object with HttpStatusCode
+            if (response == null &&
+                typeof(ProtocolObjectResponse) == typeof(TResponse))
+            {
+                return new ProtocolObjectResponse { HttpStatusCode = responseMessage.StatusCode } as TResponse;
+            }
+
+            //If response is ProtocolObjectResponse, 
+            //add HttpStatusCode to response
+            var protocolObject = response as ProtocolObjectResponse;
+            if (protocolObject != null)
+            {
+                protocolObject.HttpStatusCode = responseMessage.StatusCode;
+            }
+
+            return response;
         }
 
         [ItemNotNull]
-        protected internal virtual async Task<HttpResponseMessage> SendAsync([NotNull] HttpRequestMessage request, CancellationToken cancellationToken)
+        protected async Task<HttpResponseMessage> SendAsync([NotNull] HttpRequestMessage request, CancellationToken cancellationToken)
         {
             if (request == null)
             {
@@ -174,8 +172,8 @@ namespace YandexDisk.Client.Http
             }
         }
 
-        [ItemNotNull]
-        protected internal virtual async Task<TResponse> ReadResponse<TResponse>([NotNull] HttpResponseMessage responseMessage)
+        [ItemCanBeNull]
+        private async Task<TResponse> ReadResponse<TResponse>([NotNull] HttpResponseMessage responseMessage)
             where TResponse : class
         {
             if (responseMessage == null)
@@ -200,11 +198,11 @@ namespace YandexDisk.Client.Http
                 return await responseMessage.Content.ReadAsStreamAsync() as TResponse;
             }
 
-            return await responseMessage.Content.ReadAsAsync<TResponse>(DefaultFormatters);
+            return await responseMessage.Content.ReadAsAsync<TResponse>(_defaultFormatters);
         }
 
-        [ItemNotNull]
-        protected internal Task<TResponse> GetAsync<TParams, TResponse>([NotNull] string relativeUrl, [CanBeNull] TParams parameters, CancellationToken cancellationToken)
+        [ItemCanBeNull]
+        protected Task<TResponse> GetAsync<TParams, TResponse>([NotNull] string relativeUrl, [CanBeNull] TParams parameters, CancellationToken cancellationToken)
             where TParams : class
             where TResponse : class
         {
@@ -220,8 +218,8 @@ namespace YandexDisk.Client.Http
             return SendAsync<TResponse>(requestMessage, cancellationToken);
         }
 
-        [ItemNotNull]
-        protected internal Task<TResponse> RequestAsync<TRequest, TParams, TResponse>([NotNull] string relativeUrl, [CanBeNull] TParams parameters, [CanBeNull] TRequest request, [NotNull] HttpMethod httpMethod, CancellationToken cancellationToken)
+        [ItemCanBeNull]
+        private Task<TResponse> RequestAsync<TRequest, TParams, TResponse>([NotNull] string relativeUrl, [CanBeNull] TParams parameters, [CanBeNull] TRequest request, [NotNull] HttpMethod httpMethod, CancellationToken cancellationToken)
             where TRequest : class
             where TResponse : class
             where TParams : class
@@ -235,7 +233,7 @@ namespace YandexDisk.Client.Http
             return SendAsync<TResponse>(requestMessage, cancellationToken);
         }
 
-        [ItemNotNull]
+        [ItemCanBeNull]
         protected internal Task<TResponse> PostAsync<TRequest, TParams, TResponse>([NotNull] string relativeUrl, [CanBeNull] TParams parameters, [CanBeNull] TRequest request, CancellationToken cancellationToken)
             where TRequest : class
             where TResponse : class
@@ -244,13 +242,22 @@ namespace YandexDisk.Client.Http
             return RequestAsync<TRequest, TParams, TResponse>(relativeUrl, parameters, request, HttpMethod.Post, cancellationToken);
         }
 
-        [ItemNotNull]
-        protected internal Task<TResponse> PutAsync<TRequest, TParams, TResponse>([NotNull] string relativeUrl, [CanBeNull] TParams parameters, [CanBeNull] TRequest request, CancellationToken cancellationToken)
+        [ItemCanBeNull]
+        protected Task<TResponse> PutAsync<TRequest, TParams, TResponse>([NotNull] string relativeUrl, [CanBeNull] TParams parameters, [CanBeNull] TRequest request, CancellationToken cancellationToken)
             where TRequest : class
             where TResponse : class
             where TParams : class
         {
             return RequestAsync<TRequest, TParams, TResponse>(relativeUrl, parameters, request, HttpMethod.Put, cancellationToken);
+        }
+
+        [ItemCanBeNull]
+        protected Task<TResponse> DeleteAsync<TRequest, TParams, TResponse>([NotNull] string relativeUrl, [CanBeNull] TParams parameters, [CanBeNull] TRequest request, CancellationToken cancellationToken)
+            where TRequest : class
+            where TResponse : class
+            where TParams : class
+        {
+            return RequestAsync<TRequest, TParams, TResponse>(relativeUrl, parameters, request, HttpMethod.Delete, cancellationToken);
         }
 
         private async Task EnsureSuccessStatusCode([NotNull] HttpResponseMessage response)

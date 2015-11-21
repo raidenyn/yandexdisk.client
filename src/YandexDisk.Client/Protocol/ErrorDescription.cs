@@ -3,7 +3,7 @@
     /// <summary>
     /// Дополнительное описание ошибки
     /// </summary>
-    public class ErrorDescription
+    public class ErrorDescription : ProtocolObjectResponse
     {
         /// <summary>
         /// Подробное описание ошибки в помощь разработчику.

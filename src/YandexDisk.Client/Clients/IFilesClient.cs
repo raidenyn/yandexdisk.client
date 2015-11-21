@@ -8,40 +8,37 @@ using YandexDisk.Client.Protocol;
 namespace YandexDisk.Client.Clients
 {
     /// <summary>
-    /// Операции над файлами
+    /// Files operation client
     /// </summary>
     [PublicAPI]
     public interface IFilesClient
     {
         /// <summary>
-        /// Запрос URL для загрузки
+        /// Return link for file upload 
         /// </summary>
-        /// <param name="path">путь, по которому следует загрузить файл</param>
-        /// <param name="overwrite">ризнак перезаписи</param>
+        /// <param name="path">Path on Disk for uploading file</param>
+        /// <param name="overwrite">If file exists it will be overwritten</param>
         /// <param name="cancellationToken"></param>
         [PublicAPI, NotNull]
         Task<Link> GetUploadLinkAsync([NotNull] string path, bool overwrite, CancellationToken cancellationToken);
 
         /// <summary>
-        /// Загрузка файла на полученный URL
+        /// Upload file to Disk on link recivied by <see cref="GetUploadLinkAsync"/>
         /// </summary>
         [PublicAPI, NotNull]
         Task UploadAsync([NotNull] Link link, [NotNull] Stream file, CancellationToken cancellationToken);
 
         /// <summary>
-        /// Запрос URL для скачивания
+        /// Return link for file download 
         /// </summary>
-        /// <param name="path">путь к скачиваемому файлу</param>
+        /// <param name="path">Path to downloading fileon Disk</param>
         /// <param name="cancellationToken"></param>
-        /// <returns>Ссылка для скачивания</returns>
         [PublicAPI, NotNull]
         Task<Link> GetDownloadLinkAsync([NotNull] string path, CancellationToken cancellationToken);
 
         /// <summary>
-        /// Скачивание файла по полученному URL
+        /// Download file from Disk on link recivied by <see cref="GetDownloadLinkAsync"/>
         /// </summary>
-        /// <param name="link">Ссылка для скачивания</param>
-        /// <param name="cancellationToken"></param>
         [PublicAPI, NotNull]
         Task<Stream> DownloadAsync([NotNull] Link link, CancellationToken cancellationToken);
     }

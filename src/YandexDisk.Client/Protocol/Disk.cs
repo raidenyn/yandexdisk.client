@@ -3,7 +3,7 @@
     /// <summary>
     /// Данные о свободном и занятом пространстве на Диск
     /// </summary>
-    public class Disk
+    public class Disk : ProtocolObjectResponse
     {
         /// <summary>
         /// Объем файлов, находящихся в Корзине, в байтах.

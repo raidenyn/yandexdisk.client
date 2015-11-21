@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace YandexDisk.Client.Protocol
+﻿namespace YandexDisk.Client.Protocol
 {
     /// <summary>
     /// Запрос метаинформации
