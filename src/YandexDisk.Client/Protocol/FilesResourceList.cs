@@ -3,9 +3,9 @@
 namespace YandexDisk.Client.Protocol
 {
     /// <summary>
-    /// Список последних добавленных на Диск файлов, отсортированных по дате загрузки (от поздних к ранним).
+    /// Плоский список всех файлов на Диске в алфавитном порядке.
     /// </summary>
-    public class LastUploadedResourceList : ProtocolObjectResponse
+    public class FilesResourceList : ProtocolObjectResponse
     {
         /// <summary>
         /// Массив ресурсов (Resource), содержащихся в папке.
@@ -16,5 +16,10 @@ namespace YandexDisk.Client.Protocol
         /// Максимальное количество элементов в массиве items, заданное в запросе.
         /// </summary>
         public int Limit { get; set; }
+
+        /// <summary>
+        /// Смещение начала списка от первого ресурса в папке.
+        /// </summary>
+        public int Offset { get; set; }
     }
 }

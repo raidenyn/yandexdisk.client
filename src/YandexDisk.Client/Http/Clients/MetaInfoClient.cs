@@ -11,6 +11,11 @@ namespace YandexDisk.Client.Http.Clients
             : base(apiContext)
         { }
 
+        public Task<Disk> GetDiskInfoAsync(CancellationToken cancellationToken)
+        {
+            return GetAsync<object, Disk>("", /*params*/ null, cancellationToken);
+        }
+
         public Task<Resource> GetInfoAsync(ResourceRequest request, CancellationToken cancellationToken)
         {
             return GetAsync<ResourceRequest, Resource>("resources", request, cancellationToken);
@@ -24,6 +29,11 @@ namespace YandexDisk.Client.Http.Clients
         public Task<FilesResourceList> GetFilesInfoAsync(FilesResourceRequest request, CancellationToken cancellationToken)
         {
             return GetAsync<FilesResourceRequest, FilesResourceList>("resources/files", request, cancellationToken);
+        }
+
+        public Task<LastUploadedResourceList> GetLastUploadedInfoAsync(LastUploadedResourceRequest request, CancellationToken cancellationToken)
+        {
+            return GetAsync<LastUploadedResourceRequest, LastUploadedResourceList>("resources/last-uploaded", request, cancellationToken);
         }
     }
 }

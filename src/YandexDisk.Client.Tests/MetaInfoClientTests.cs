@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using NUnit.Framework;
-using YandexDisk.Client.Clients;
 using YandexDisk.Client.Http;
 using YandexDisk.Client.Protocol;
 
@@ -13,6 +10,39 @@ namespace YandexDisk.Client.Tests
 {
     public class MetaInfoClientTests
     {
+        [Test]
+        public async Task GetDiskInfoTest()
+        {
+            var httpClientTest = new TestHttpClient("GET", TestHttpClient.BaseUrl + "", HttpStatusCode.OK, @"
+{
+  ""trash_size"": 4631577437,
+  ""total_space"": 319975063552,
+  ""used_space"": 26157681270,
+  ""system_folders"":
+  {
+    ""applications"": ""disk:/Приложения"",
+    ""downloads"": ""disk:/Загрузки/""
+  }
+}
+");
+
+            var diskClient = new DiskHttpApi(TestHttpClient.BaseUrl,
+                                             TestHttpClient.ApiKey,
+                                             logSaver: null,
+                                             httpClient: httpClientTest);
+
+            Disk result = await diskClient.MetaInfo.GetDiskInfoAsync(CancellationToken.None);
+
+            Assert.NotNull(result);
+            Assert.AreEqual(319975063552L, result.TotalSpace);
+            Assert.AreEqual(4631577437L, result.TrashSize);
+            Assert.AreEqual(26157681270L, result.UsedSpace);
+
+            Assert.NotNull(result.SystemFolders);
+            Assert.AreEqual("disk:/Приложения", result.SystemFolders.Applications);
+            Assert.AreEqual("disk:/Загрузки/", result.SystemFolders.Downloads);
+        }
+
         [Test]
         public async Task GetInfoTest()
         {
@@ -227,26 +257,76 @@ namespace YandexDisk.Client.Tests
             Assert.AreEqual(new DateTime(2014, 04, 21, 14, 57, 14, DateTimeKind.Local), secondItem.Modified);
         }
 
-        async Task DownloadAllFilesInFolder(IDiskApi diskApi)
+        [Test]
+        public async Task GetLastUploadedInfoTest()
         {
-            //Getting information about folder /foo and all files in it
-            Resource fooResourceDescription = await diskApi.MetaInfo.GetInfoAsync(new ResourceRequest
+            var httpClientTest = new TestHttpClient("GET", TestHttpClient.BaseUrl + @"resources/last-uploaded?media_type=""audio,executable""&limit=20", HttpStatusCode.OK, @"
+{
+  ""items"": [
+      {
+        ""name"": ""photo2.png"",
+        ""preview"": ""https://downloader.disk.yandex.ru/preview/..."",
+        ""created"": ""2014-04-22T14:57:13+04:00"",
+        ""modified"": ""2014-04-22T14:57:14+04:00"",
+        ""path"": ""disk:/foo/photo2.png"",
+        ""md5"": ""53f4dc6379c8f95ddf11b9508cfea271"",
+        ""type"": ""file"",
+        ""mime_type"": ""image/png"",
+        ""size"": 54321
+      },
+      {
+        ""name"": ""photo1.png"",
+        ""preview"": ""https://downloader.disk.yandex.ru/preview/..."",
+        ""created"": ""2014-04-21T14:57:13+04:00"",
+        ""modified"": ""2014-04-21T14:57:14+04:00"",
+        ""path"": ""disk:/foo/photo1.png"",
+        ""md5"": ""4334dc6379c8f95ddf11b9508cfea271"",
+        ""type"": ""file"",
+        ""mime_type"": ""image/png"",
+        ""size"": 34567
+      }
+    ],
+    ""limit"": 20,
+  }
+");
+
+            var diskClient = new DiskHttpApi(TestHttpClient.BaseUrl,
+                                             TestHttpClient.ApiKey,
+                                             logSaver: null,
+                                             httpClient: httpClientTest);
+
+            LastUploadedResourceList result = await diskClient.MetaInfo.GetLastUploadedInfoAsync(new LastUploadedResourceRequest
             {
-                Path = "/foo", //Folder on Yandex Disk
+                Limit = 20,
+                MediaType = new[] { MediaType.Audio, MediaType.Executable }
             }, CancellationToken.None);
 
-            //Getting all files from response
-            IEnumerable<Resource> allFilesInFolder = fooResourceDescription.Embedded.Items.Where(item => item.Type == ResourceType.File);
+            Assert.NotNull(result);
+            Assert.AreEqual(20, result.Limit);
+            Assert.IsNotEmpty(result.Items);
+            Assert.AreEqual(2, result.Items.Count);
 
-            //Path to local folder for downloading files
-            string localFolder = @"C:\foo";
+            var firstItem = result.Items[0];
+            Assert.AreEqual("photo2.png", firstItem.Name);
+            Assert.AreEqual("https://downloader.disk.yandex.ru/preview/...", firstItem.Preview);
+            Assert.AreEqual("disk:/foo/photo2.png", firstItem.Path);
+            Assert.AreEqual(ResourceType.File, firstItem.Type);
+            Assert.AreEqual("53f4dc6379c8f95ddf11b9508cfea271", firstItem.Md5);
+            Assert.AreEqual("image/png", firstItem.MimeType);
+            Assert.AreEqual(54321, firstItem.Size);
+            Assert.AreEqual(new DateTime(2014, 04, 22, 14, 57, 13, DateTimeKind.Local), firstItem.Created);
+            Assert.AreEqual(new DateTime(2014, 04, 22, 14, 57, 14, DateTimeKind.Local), firstItem.Modified);
 
-            //Run all downloadings in parallel. DiskApi is thread safe.
-            IEnumerable<Task> downloadingTasks = 
-                allFilesInFolder.Select(file => diskApi.Files.DownloadFileAsync(file.Path, System.IO.Path.Combine(localFolder, file.Name)));
-
-            //Wait all done
-            await Task.WhenAll(downloadingTasks);
+            var secondItem = result.Items[1];
+            Assert.AreEqual("photo1.png", secondItem.Name);
+            Assert.AreEqual("https://downloader.disk.yandex.ru/preview/...", secondItem.Preview);
+            Assert.AreEqual("disk:/foo/photo1.png", secondItem.Path);
+            Assert.AreEqual(ResourceType.File, secondItem.Type);
+            Assert.AreEqual("4334dc6379c8f95ddf11b9508cfea271", secondItem.Md5);
+            Assert.AreEqual("image/png", secondItem.MimeType);
+            Assert.AreEqual(34567, secondItem.Size);
+            Assert.AreEqual(new DateTime(2014, 04, 21, 14, 57, 13, DateTimeKind.Local), secondItem.Created);
+            Assert.AreEqual(new DateTime(2014, 04, 21, 14, 57, 14, DateTimeKind.Local), secondItem.Modified);
         }
     }
 }

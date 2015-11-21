@@ -11,6 +11,11 @@ namespace YandexDisk.Client.Clients
     public interface IMetaInfoClient
     {
         /// <summary>
+        /// Returns information about disk
+        /// </summary>
+        Task<Disk> GetDiskInfoAsync(CancellationToken cancellationToken);
+
+        /// <summary>
         /// Return files or folder metadata
         /// </summary>
         Task<Resource> GetInfoAsync([NotNull] ResourceRequest request, CancellationToken cancellationToken);
@@ -23,6 +28,12 @@ namespace YandexDisk.Client.Clients
         /// <summary>
         /// Flat file list on Disk
         /// </summary>
-        Task<FilesResourceList> GetFilesInfoAsync([NotNull] FilesResourceRequest request, CancellationToken cancellationToken);
+        /// <returns></returns>
+        Task<FilesResourceList> GetFilesInfoAsync(FilesResourceRequest request, CancellationToken cancellationToken);
+
+        /// <summary>
+        /// Last uploaded file list on Disk
+        /// </summary>
+        Task<LastUploadedResourceList> GetLastUploadedInfoAsync([NotNull] LastUploadedResourceRequest request, CancellationToken cancellationToken);
     }
 }
