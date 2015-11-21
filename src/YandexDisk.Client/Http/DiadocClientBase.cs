@@ -8,6 +8,7 @@ using System.Runtime.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
 using JetBrains.Annotations;
+using Newtonsoft.Json;
 using YandexDisk.Client.Http.Serialization;
 using YandexDisk.Client.Protocol;
 
@@ -23,7 +24,10 @@ namespace YandexDisk.Client.Http
             {
                 SerializerSettings =
                 {
-                    ContractResolver = new SnakeCasePropertyNamesContractResolver()
+                    ContractResolver = new SnakeCasePropertyNamesContractResolver(),
+                    DateFormatHandling = DateFormatHandling.IsoDateFormat,
+                    DateTimeZoneHandling = DateTimeZoneHandling.Unspecified,
+                    DateParseHandling = DateParseHandling.DateTime
                 }
             }
         };

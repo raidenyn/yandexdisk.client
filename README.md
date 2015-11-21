@@ -1,6 +1,6 @@
 # Yandex Disk API Client for .NET
 
-[Yandex Disk Rest API](https://tech.yandex.ru/disk/rest/) client library for .NET 4.5
+[Yandex Disk Rest API](https://tech.yandex.ru/disk/rest/) client library for .NET 4.6
 
 ## How to use
 
@@ -49,4 +49,4 @@ async Task DownloadAllFilesInFolder(IDiskApi diskApi)
 ```
 
 ## How to build
-Open solution src/YandexDisk.Client.sln in Visual Studio 2015 (support C# 6 is required). Make sure that NuGet restoring option is turn on. Run build solution. 
+Open solution src/YandexDisk.Client.sln in Visual Studio 2015 (support C# 6 is required). Make sure that NuGet restoring option is turn on. Run build solution.
