@@ -4,6 +4,15 @@
 
 [![yandexdisk-client MyGet Build Status](https://www.myget.org/BuildSource/Badge/yandexdisk-client?identifier=8a8dfc85-9089-404c-a42e-93dabef1cb25)](https://www.myget.org/)
 
+## How to install
+
+From [NuGet](https://www.nuget.org/packages/YandexDisk.Client/) or
+[MyGet](https://www.myget.org/feed/yandexdisk-client)
+```cmd
+PM> Install-Package YandexDisk.Client
+```
+
+
 ## How to use
 
 Example of uploading file to Yandex Disk
