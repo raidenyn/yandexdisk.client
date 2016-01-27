@@ -1,9 +1,9 @@
-﻿using Newtonsoft.Json;
+﻿using System.Runtime.Serialization;
 
 namespace YandexDisk.Client.Protocol
 {
     /// <summary>
-    /// Статус операции. Операции запускаются, когда вы копируете, перемещаете или удаляете непустые папки. 
+    /// Статус операции. Операции запускаются, когда вы копируете, перемещаете или удаляете непустые папки.
     /// URL для запроса статуса возвращается в ответ на такие запросы.
     /// </summary>
     public class Operation : ProtocolObjectResponse
@@ -32,7 +32,7 @@ namespace YandexDisk.Client.Protocol
         /// <summary>
         /// Операция начата, но еще не завершена.
         /// </summary>
-        [JsonProperty("in-progress")]
-        InProgress,
+        [EnumMember(Value = "in-progress")]
+        InProgress
     }
 }
