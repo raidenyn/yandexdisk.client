@@ -43,19 +43,22 @@ async Task DownloadAllFilesInFolder(IDiskApi diskApi)
 {
     //Getting information about folder /foo and all files in it
     Resource fooResourceDescription = await diskApi.MetaInfo.GetInfoAsync(new ResourceRequest
-    {
-        Path = "/foo", //Folder on Yandex Disk
-    }, CancellationToken.None);
+                                            {
+                                                Path = "/foo", //Folder on Yandex Disk
+                                            }, CancellationToken.None);
 
     //Getting all files from response
-    IEnumerable<Resource> allFilesInFolder = fooResourceDescription.Embedded.Items.Where(item => item.Type == ResourceType.File);
+    IEnumerable<Resource> allFilesInFolder =
+        fooResourceDescription.Embedded.Items.Where(item => item.Type == ResourceType.File);
 
     //Path to local folder for downloading files
     string localFolder = @"C:\foo";
 
     //Run all downloadings in parallel. DiskApi is thread safe.
     IEnumerable<Task> downloadingTasks =
-        allFilesInFolder.Select(file => diskApi.Files.DownloadFileAsync(file.Path, System.IO.Path.Combine(localFolder, file.Name)));
+        allFilesInFolder.Select(file =>
+          diskApi.Files.DownloadFileAsync(path: file.Path,
+                                          localPath: System.IO.Path.Combine(localFolder, file.Name)));
 
     //Wait all done
     await Task.WhenAll(downloadingTasks);
