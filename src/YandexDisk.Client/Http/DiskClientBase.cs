@@ -14,7 +14,7 @@ using YandexDisk.Client.Protocol;
 
 namespace YandexDisk.Client.Http
 {
-    internal abstract class DiadocClientBase
+    internal abstract class DiskClientBase
     {
         private static readonly QueryParamsSerializer MvcSerializer = new QueryParamsSerializer();
 
@@ -25,6 +25,7 @@ namespace YandexDisk.Client.Http
                 SerializerSettings =
                 {
                     ContractResolver = new SnakeCasePropertyNamesContractResolver(),
+                    Converters = { new SnakeCaseEnumConverter() },
                     DateFormatHandling = DateFormatHandling.IsoDateFormat,
                     DateTimeZoneHandling = DateTimeZoneHandling.Unspecified,
                     DateParseHandling = DateParseHandling.DateTime
@@ -36,7 +37,7 @@ namespace YandexDisk.Client.Http
         private readonly ILogSaver _logSaver;
         private readonly Uri _baseUrl;
 
-        protected DiadocClientBase([NotNull] ApiContext apiContext)
+        protected DiskClientBase([NotNull] ApiContext apiContext)
         {
             if (apiContext == null)
             {
@@ -118,7 +119,7 @@ namespace YandexDisk.Client.Http
 
             HttpResponseMessage responseMessage = await SendAsync(request, cancellationToken);
 
-            TResponse response = await ReadResponse<TResponse>(responseMessage);
+            TResponse response = await ReadResponse<TResponse>(responseMessage, cancellationToken);
 
             //If response body is null but ProtocolObjectResponse was requested, 
             //create empty object
@@ -173,7 +174,7 @@ namespace YandexDisk.Client.Http
         }
 
         [ItemCanBeNull]
-        private async Task<TResponse> ReadResponse<TResponse>([NotNull] HttpResponseMessage responseMessage)
+        protected async Task<TResponse> ReadResponse<TResponse>([NotNull] HttpResponseMessage responseMessage, CancellationToken cancellationToken)
             where TResponse : class
         {
             if (responseMessage == null)
@@ -198,7 +199,7 @@ namespace YandexDisk.Client.Http
                 return await responseMessage.Content.ReadAsStreamAsync() as TResponse;
             }
 
-            return await responseMessage.Content.ReadAsAsync<TResponse>(_defaultFormatters);
+            return await responseMessage.Content.ReadAsAsync<TResponse>(_defaultFormatters, cancellationToken);
         }
 
         [ItemCanBeNull]

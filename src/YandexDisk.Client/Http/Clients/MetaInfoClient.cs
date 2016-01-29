@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Threading;
 using System.Threading.Tasks;
 using YandexDisk.Client.Clients;
@@ -7,7 +6,7 @@ using YandexDisk.Client.Protocol;
 
 namespace YandexDisk.Client.Http.Clients
 {
-    internal class MetaInfoClient : DiadocClientBase, IMetaInfoClient
+    internal class MetaInfoClient : DiskClientBase, IMetaInfoClient
     {
         internal MetaInfoClient(ApiContext apiContext)
             : base(apiContext)

@@ -7,7 +7,7 @@ using YandexDisk.Client.Protocol;
 
 namespace YandexDisk.Client.Http.Clients
 {
-    internal class CommandsClient : DiadocClientBase, ICommandsClient
+    internal class CommandsClient : DiskClientBase, ICommandsClient
     {
         internal CommandsClient(ApiContext apiContext)
             : base(apiContext)
@@ -53,7 +53,14 @@ namespace YandexDisk.Client.Http.Clients
 
             HttpResponseMessage responseMessage = await SendAsync(requestMessage, cancellationToken);
 
-            return await responseMessage.Content.ReadAsAsync<Operation>(cancellationToken);
+            Operation operation = await ReadResponse<Operation>(responseMessage, cancellationToken);
+
+            if (operation == null)
+            {
+                throw new Exception("Unexpected empty result.");
+            }
+
+            return operation;
         }
     }
 }

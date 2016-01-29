@@ -8,7 +8,7 @@ using YandexDisk.Client.Protocol;
 
 namespace YandexDisk.Client.Http.Clients
 {
-    internal class FilesClient : DiadocClientBase, IFilesClient
+    internal class FilesClient : DiskClientBase, IFilesClient
     {
         internal FilesClient(ApiContext apiContext)
             : base(apiContext)

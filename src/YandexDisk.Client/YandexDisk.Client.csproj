@@ -49,6 +49,7 @@
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -67,6 +68,7 @@
     <Compile Include="Http\RealHttpClientWrapper.cs" />
     <Compile Include="Http\Serialization\DateTimeSerializer.cs" />
     <Compile Include="Http\Serialization\PropertyResolver.cs" />
+    <Compile Include="Http\Serialization\SnakeCaseEnumConverter.cs" />
     <Compile Include="Http\Serialization\ValueSerializer.cs" />
     <Compile Include="Http\Serialization\SnakeCasePropertyNamesContractResolver.cs" />
     <Compile Include="Protocol\LastUploadedResourceRequest.cs" />
@@ -89,8 +91,8 @@
     <Compile Include="YandexApiException.cs" />
     <Compile Include="Http\ApiContext.cs" />
     <Compile Include="Http\Clients\FilesClient.cs" />
-    <Compile Include="Http\DiadocClientBase.cs" />
-    <Compile Include="Http\DiadocHttpApi.cs" />
+    <Compile Include="Http\DiskClientBase.cs" />
+    <Compile Include="Http\DiskHttpApi.cs" />
     <Compile Include="Http\ILogSaver.cs" />
     <Compile Include="Http\Logger.cs" />
     <Compile Include="Http\Serialization\QueryParamsSerializer.cs" />

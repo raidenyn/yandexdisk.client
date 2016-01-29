@@ -221,5 +221,33 @@ namespace YandexDisk.Client.Tests
             Assert.NotNull(result);
             Assert.AreEqual(OperationStatus.Success, result.Status);
         }
+
+        [Test]
+        public async Task GetOperationStatusTest_InProgress()
+        {
+            var httpClientTest = new TestHttpClient(
+                methodName: "GET",
+                url: TestHttpClient.BaseUrl + "operations/d80c269ce4eb16c0207f0a15t4a31415313452f9e950cd9576f36b1146ee0e42",
+                httpStatusCode: HttpStatusCode.OK,
+                result: @"
+{
+  ""status"":""in-progress""
+}
+");
+
+            var diskClient = new DiskHttpApi(TestHttpClient.BaseUrl,
+                                             TestHttpClient.ApiKey,
+                                             logSaver: null,
+                                             httpClient: httpClientTest);
+
+            Operation result = await diskClient.Commands.GetOperationStatus(new Link
+            {
+                Href = TestHttpClient.BaseUrl + "operations/d80c269ce4eb16c0207f0a15t4a31415313452f9e950cd9576f36b1146ee0e42",
+                Method = "GET"
+            }, CancellationToken.None);
+
+            Assert.NotNull(result);
+            Assert.AreEqual(OperationStatus.InProgress, result.Status);
+        }
     }
 }
