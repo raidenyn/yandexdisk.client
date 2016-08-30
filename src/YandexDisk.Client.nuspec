@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
     <metadata>
         <id>YandexDisk.Client</id>
-        <version>1.0.0</version>
+        <version>1.0.1</version>
         <title>Yandex Disk RestAPI Client for .NET</title>
         <authors>Yuriy Nagaev</authors>
         <licenseUrl>https://github.com/raidenyn/yandexdisk.client/blob/master/LICENSE</licenseUrl>
@@ -12,14 +12,14 @@
         <description>.NET library wrapper of Yandex Desktop RestAPI.
 See https://tech.yandex.ru/disk/</description>
         <summary>The MIT License (MIT)
-Copyright (c) 2015 Yuriy Nagaev</summary>
+Copyright (c) 2015-2016 Yuriy Nagaev</summary>
         <copyright>Yuriy Nagaev</copyright>
         <language />
         <tags>yandex, disk, cloud disk</tags>
         <dependencies>
             <group targetFramework=".NETFramework4.6">
-                <dependency id="JetBrains.Annotations" version="10.0.0" />
                 <dependency id="Microsoft.AspNet.WebApi.Client" version="5.2.3" />
+                <dependency id="Newtonsoft.Json" version="9.0.1" />
             </group>
         </dependencies>
     </metadata>
