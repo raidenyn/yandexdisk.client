@@ -30,7 +30,7 @@ namespace YandexDisk.Client.Tests
                                              logSaver: null,
                                              httpClient: httpClientTest);
 
-            Link result = await diskClient.Commands.CreateDictionaryAsync("/foo", CancellationToken.None);
+            Link result = await diskClient.Commands.CreateDictionaryAsync("/foo", CancellationToken.None).ConfigureAwait(false);
 
             Assert.NotNull(result);
             Assert.AreEqual("https://cloud-api.yandex.net/v1/disk/resources?path=disk%3A%2FMusic", result.Href);
@@ -62,7 +62,7 @@ namespace YandexDisk.Client.Tests
             {
                 From = "/foo",
                 Path = "/baz"
-            }, CancellationToken.None);
+            }, CancellationToken.None).ConfigureAwait(false);
 
             Assert.NotNull(result);
             Assert.AreEqual("https://cloud-api.yandex.net/v1/disk/operations?id=33ca7d03ab21ct41b4a40182e78d828a3f8b72cdb5f4c0e94cc4b1449a63a2fe", result.Href);
@@ -95,7 +95,7 @@ namespace YandexDisk.Client.Tests
                 From = "/foo",
                 Path = "/baz",
                 Overwrite = true
-            }, CancellationToken.None);
+            }, CancellationToken.None).ConfigureAwait(false);
 
             Assert.NotNull(result);
             Assert.AreEqual("https://cloud-api.yandex.net/v1/disk/operations?id=33ca7d03ab21ct41b4a40182e78d828a3f8b72cdb5f4c0e94cc4b1449a63a2fe", result.Href);
@@ -126,7 +126,7 @@ namespace YandexDisk.Client.Tests
             Link result = await diskClient.Commands.DeleteAsync(new DeleteFileRequest
             {
                 Path = "/foo",
-            }, CancellationToken.None);
+            }, CancellationToken.None).ConfigureAwait(false);
 
             Assert.NotNull(result);
             Assert.AreEqual("https://cloud-api.yandex.net/v1/disk/operations?id=d80c269ce4eb16c0207f0a15t4a31415313452f9e950cd9576f36b1146ee0e42", result.Href);
@@ -154,7 +154,7 @@ namespace YandexDisk.Client.Tests
                                              logSaver: null,
                                              httpClient: httpClientTest);
 
-            Link result = await diskClient.Commands.EmptyTrashAsync(path: "/foo", cancellationToken: CancellationToken.None);
+            Link result = await diskClient.Commands.EmptyTrashAsync(path: "/foo", cancellationToken: CancellationToken.None).ConfigureAwait(false);
 
             Assert.NotNull(result);
             Assert.AreEqual("https://cloud-api.yandex.net/v1/disk/operations?id=d80c269ce4eb16c0207f0a15t4a31415313452f9e950cd9576f36b1146ee0e42", result.Href);
@@ -186,7 +186,7 @@ namespace YandexDisk.Client.Tests
             {
                 Path = "/foo",
                 Name = "baz"
-            }, CancellationToken.None);
+            }, CancellationToken.None).ConfigureAwait(false);
 
             Assert.NotNull(result);
             Assert.AreEqual("https://cloud-api.yandex.net/v1/disk/resources?path=disk%3A%2Fbar%2Fselfie.png", result.Href);
@@ -216,7 +216,7 @@ namespace YandexDisk.Client.Tests
             {
                 Href = TestHttpClient.BaseUrl + "operations/d80c269ce4eb16c0207f0a15t4a31415313452f9e950cd9576f36b1146ee0e42",
                 Method = "GET"
-            }, CancellationToken.None);
+            }, CancellationToken.None).ConfigureAwait(false);
 
             Assert.NotNull(result);
             Assert.AreEqual(OperationStatus.Success, result.Status);
@@ -244,7 +244,7 @@ namespace YandexDisk.Client.Tests
             {
                 Href = TestHttpClient.BaseUrl + "operations/d80c269ce4eb16c0207f0a15t4a31415313452f9e950cd9576f36b1146ee0e42",
                 Method = "GET"
-            }, CancellationToken.None);
+            }, CancellationToken.None).ConfigureAwait(false);
 
             Assert.NotNull(result);
             Assert.AreEqual(OperationStatus.InProgress, result.Status);

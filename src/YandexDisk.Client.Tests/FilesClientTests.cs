@@ -30,7 +30,7 @@ namespace YandexDisk.Client.Tests
                                              logSaver: null,
                                              httpClient: httpClientTest);
 
-            Link result = await diskClient.Files.GetUploadLinkAsync("/", true, CancellationToken.None);
+            Link result = await diskClient.Files.GetUploadLinkAsync("/", true, CancellationToken.None).ConfigureAwait(false);
 
             Assert.NotNull(result);
             Assert.AreEqual("https://uploader1d.dst.yandex.net:443/upload-target/...", result.Href);
@@ -59,7 +59,7 @@ namespace YandexDisk.Client.Tests
                                              logSaver: null,
                                              httpClient: httpClientTest);
 
-            await diskClient.Files.UploadAsync(link, new MemoryStream(), CancellationToken.None);
+            await diskClient.Files.UploadAsync(link, new MemoryStream(), CancellationToken.None).ConfigureAwait(false);
         }
 
         [Test]
@@ -82,7 +82,7 @@ namespace YandexDisk.Client.Tests
                                              logSaver: null,
                                              httpClient: httpClientTest);
 
-            Link result = await diskClient.Files.GetDownloadLinkAsync("/file.txt", CancellationToken.None);
+            Link result = await diskClient.Files.GetDownloadLinkAsync("/file.txt", CancellationToken.None).ConfigureAwait(false);
 
             Assert.NotNull(result);
             Assert.AreEqual("https://downloader.dst.yandex.ru/disk/...", result.Href);
@@ -111,7 +111,7 @@ namespace YandexDisk.Client.Tests
                                              logSaver: null,
                                              httpClient: httpClientTest);
 
-            Stream stream = await diskClient.Files.DownloadAsync(link, CancellationToken.None);
+            Stream stream = await diskClient.Files.DownloadAsync(link, CancellationToken.None).ConfigureAwait(false);
 
             var content = new StreamReader(stream).ReadToEnd();
 

@@ -15,32 +15,32 @@ namespace YandexDisk.Client.Clients
         /// <summary>
         /// Returns information about disk
         /// </summary>
-        Task<Disk> GetDiskInfoAsync(CancellationToken cancellationToken);
+        Task<Disk> GetDiskInfoAsync(CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Return files or folder metadata
         /// </summary>
-        Task<Resource> GetInfoAsync([NotNull] ResourceRequest request, CancellationToken cancellationToken);
+        Task<Resource> GetInfoAsync([NotNull] ResourceRequest request, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Return files or folder metadata in the trash
         /// </summary>
-        Task<Resource> GetTrashInfoAsync([NotNull] ResourceRequest request, CancellationToken cancellationToken);
+        Task<Resource> GetTrashInfoAsync([NotNull] ResourceRequest request, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Flat file list on Disk
         /// </summary>
         /// <returns></returns>
-        Task<FilesResourceList> GetFilesInfoAsync(FilesResourceRequest request, CancellationToken cancellationToken);
+        Task<FilesResourceList> GetFilesInfoAsync(FilesResourceRequest request, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Last uploaded file list on Disk
         /// </summary>
-        Task<LastUploadedResourceList> GetLastUploadedInfoAsync([NotNull] LastUploadedResourceRequest request, CancellationToken cancellationToken);
+        Task<LastUploadedResourceList> GetLastUploadedInfoAsync([NotNull] LastUploadedResourceRequest request, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Append custom properties to resource
         /// </summary>
-        Task<Resource> AppendCustomProperties([NotNull] string path, [NotNull] IDictionary<string, string> properties, CancellationToken cancellationToken);
+        Task<Resource> AppendCustomProperties([NotNull] string path, [NotNull] IDictionary<string, string> properties, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

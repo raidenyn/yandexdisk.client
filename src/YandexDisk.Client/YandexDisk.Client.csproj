@@ -59,6 +59,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AboutInfo.cs" />
+    <Compile Include="Clients\CommandsClientExtensions.cs" />
+    <Compile Include="Clients\FilesClientExtension.cs" />
     <Compile Include="Clients\ICommandsClient.cs" />
     <Compile Include="Clients\IMetaInfoClient.cs" />
     <Compile Include="Clients\IFilesClient.cs" />

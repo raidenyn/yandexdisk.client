@@ -15,6 +15,6 @@ namespace YandexDisk.Client.Http
         /// Send http-request to API
         /// </summary>
         [ItemNotNull]
-        Task<HttpResponseMessage> SendAsync([NotNull] HttpRequestMessage request, CancellationToken cancellationToken);
+        Task<HttpResponseMessage> SendAsync([NotNull] HttpRequestMessage request, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

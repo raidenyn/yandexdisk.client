@@ -34,7 +34,7 @@ namespace YandexDisk.Client.Http
             _requestLog.Headers = request.ToString();
             if (request.Content != null)
             {
-                _requestLog.Body = await request.Content.ReadAsByteArrayAsync();
+                _requestLog.Body = await request.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
             }
 
             _requestLog.StartedAt = DateTime.Now;
@@ -50,7 +50,7 @@ namespace YandexDisk.Client.Http
 
             if (httpResponseMessage.Content != null)
             {
-                _responseLog.Body = await httpResponseMessage.Content.ReadAsByteArrayAsync();
+                _responseLog.Body = await httpResponseMessage.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
             }
         }
 

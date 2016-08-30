@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
@@ -37,7 +36,7 @@ namespace YandexDisk.Client.Tests
                                              logSaver: null,
                                              httpClient: httpClientTest);
 
-            Disk result = await diskClient.MetaInfo.GetDiskInfoAsync(CancellationToken.None);
+            Disk result = await diskClient.MetaInfo.GetDiskInfoAsync(CancellationToken.None).ConfigureAwait(false);
 
             Assert.NotNull(result);
             Assert.AreEqual(319975063552L, result.TotalSpace);
@@ -106,7 +105,7 @@ namespace YandexDisk.Client.Tests
                 Limit = 20,
                 Offset = 0,
                 Sort = "name"
-            }, CancellationToken.None);
+            }, CancellationToken.None).ConfigureAwait(false);
 
             Assert.NotNull(result);
             Assert.AreEqual("HQsmHLoeyBlJf8Eu1jlmzuU+ZaLkjPkgcvmokRUCIo8=", result.PublicKey);
@@ -180,7 +179,7 @@ namespace YandexDisk.Client.Tests
                 Path = "/foo/cat.png",
                 Limit = 30,
                 Offset = 50
-            }, CancellationToken.None);
+            }, CancellationToken.None).ConfigureAwait(false);
 
             Assert.NotNull(result);
             Assert.AreEqual("cat.png", result.Name);
@@ -244,7 +243,7 @@ namespace YandexDisk.Client.Tests
                 Limit = 30,
                 Offset = 50,
                 MediaType = new[] { MediaType.Audio, MediaType.Compressed}
-            }, CancellationToken.None);
+            }, CancellationToken.None).ConfigureAwait(false);
 
             Assert.NotNull(result);
             Assert.AreEqual(20, result.Limit);
@@ -321,7 +320,7 @@ namespace YandexDisk.Client.Tests
             {
                 Limit = 20,
                 MediaType = new[] { MediaType.Audio, MediaType.Executable }
-            }, CancellationToken.None);
+            }, CancellationToken.None).ConfigureAwait(false);
 
             Assert.NotNull(result);
             Assert.AreEqual(20, result.Limit);
@@ -407,7 +406,7 @@ namespace YandexDisk.Client.Tests
             Resource result = await diskClient.MetaInfo.AppendCustomProperties("/foo", new Dictionary<string, string>  {
                 { "foo", "1" },
                 { "bar", "2" }
-            }, CancellationToken.None);
+            }, CancellationToken.None).ConfigureAwait(false);
 
             Assert.NotNull(result);
             Assert.IsNotEmpty(result.CustomProperties);

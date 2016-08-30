@@ -117,9 +117,9 @@ namespace YandexDisk.Client.Http
                 throw new ArgumentNullException(nameof(request));
             }
 
-            HttpResponseMessage responseMessage = await SendAsync(request, cancellationToken);
+            HttpResponseMessage responseMessage = await SendAsync(request, cancellationToken).ConfigureAwait(false);
 
-            TResponse response = await ReadResponse<TResponse>(responseMessage, cancellationToken);
+            TResponse response = await ReadResponse<TResponse>(responseMessage, cancellationToken).ConfigureAwait(false);
 
             //If response body is null but ProtocolObjectResponse was requested, 
             //create empty object
@@ -150,16 +150,16 @@ namespace YandexDisk.Client.Http
 
             using (ILogger logger = GetLogger())
             {
-                await logger.SetRequestAsync(request);
+                await logger.SetRequestAsync(request).ConfigureAwait(false);
 
                 try
                 {
                     HttpResponseMessage response = await _httpClient.SendAsync(request, cancellationToken).ConfigureAwait(false);
 
-                    await logger.SetResponseAsync(response);
+                    await logger.SetResponseAsync(response).ConfigureAwait(false);
 
-                    await EnsureSuccessStatusCode(response);
-                    
+                    await EnsureSuccessStatusCode(response).ConfigureAwait(false);
+
                     logger.EndWithSuccess();
 
                     return response;
@@ -188,18 +188,18 @@ namespace YandexDisk.Client.Http
             }
             if (typeof(TResponse) == typeof(string))
             {
-                return await responseMessage.Content.ReadAsStringAsync() as TResponse;
+                return await responseMessage.Content.ReadAsStringAsync().ConfigureAwait(false) as TResponse;
             }
             if (typeof(TResponse) == typeof(byte[]))
             {
-                return await responseMessage.Content.ReadAsByteArrayAsync() as TResponse;
+                return await responseMessage.Content.ReadAsByteArrayAsync().ConfigureAwait(false) as TResponse;
             }
             if (typeof(Stream).IsAssignableFrom(typeof(TResponse)))
             {
-                return await responseMessage.Content.ReadAsStreamAsync() as TResponse;
+                return await responseMessage.Content.ReadAsStreamAsync().ConfigureAwait(false) as TResponse;
             }
 
-            return await responseMessage.Content.ReadAsAsync<TResponse>(_defaultFormatters, cancellationToken);
+            return await responseMessage.Content.ReadAsAsync<TResponse>(_defaultFormatters, cancellationToken).ConfigureAwait(false);
         }
 
         [ItemCanBeNull]
@@ -274,7 +274,7 @@ namespace YandexDisk.Client.Http
         {
             if (!response.IsSuccessStatusCode)
             {
-                var error = await TryGetErrorDescriptionAsync(response);
+                var error = await TryGetErrorDescriptionAsync(response).ConfigureAwait(false);
 
                 response.Content?.Dispose();
 
@@ -294,7 +294,7 @@ namespace YandexDisk.Client.Http
             try
             {
                 return response.Content != null
-                    ? await response.Content.ReadAsAsync<ErrorDescription>()
+                    ? await response.Content.ReadAsAsync<ErrorDescription>().ConfigureAwait(false)
                     : null;
             }
             catch (SerializationException) //unexpected data in content

@@ -14,12 +14,12 @@ namespace YandexDisk.Client.Http.Clients
             : base(apiContext)
         { }
 
-        public Task<Link> GetUploadLinkAsync(string path, bool overwrite, CancellationToken cancellationToken)
+        public Task<Link> GetUploadLinkAsync(string path, bool overwrite, CancellationToken cancellationToken = default(CancellationToken))
         {
             return GetAsync<object, Link>("resources/upload", new { path, overwrite }, cancellationToken);
         }
 
-        public Task UploadAsync(Link link, Stream file, CancellationToken cancellationToken)
+        public Task UploadAsync(Link link, Stream file, CancellationToken cancellationToken = default(CancellationToken))
         {
             var url = new Uri(link.Href);
 
@@ -37,7 +37,7 @@ namespace YandexDisk.Client.Http.Clients
             return GetAsync<object, Link>("resources/download", new { path }, cancellationToken);
         }
 
-        public async Task<Stream> DownloadAsync(Link link, CancellationToken cancellationToken)
+        public async Task<Stream> DownloadAsync(Link link, CancellationToken cancellationToken = default(CancellationToken))
         {
             var url = new Uri(link.Href);
 
@@ -45,9 +45,9 @@ namespace YandexDisk.Client.Http.Clients
 
             var requestMessage = new HttpRequestMessage(method, url);
 
-            HttpResponseMessage responseMessage = await SendAsync(requestMessage, cancellationToken);
+            HttpResponseMessage responseMessage = await SendAsync(requestMessage, cancellationToken).ConfigureAwait(false);
 
-            return await responseMessage.Content.ReadAsStreamAsync();
+            return await responseMessage.Content.ReadAsStreamAsync().ConfigureAwait(false);
         }
     }
 }

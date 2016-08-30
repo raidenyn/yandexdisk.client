@@ -14,7 +14,7 @@ namespace YandexDisk.Client.Http
         private HttpMessageInvoker HttpMessageInvoker { get; }
 
 
-        public Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+        public Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken = default(CancellationToken))
         {
             return HttpMessageInvoker.SendAsync(request, cancellationToken);
         }

@@ -32,7 +32,7 @@ namespace YandexDisk.Client.Tests
             _result = result;
         }
 
-        public async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
+        public async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken = default(CancellationToken))
         {
             Assert.NotNull(request);
             Assert.AreEqual(_methodName, request.Method.Method);
@@ -40,7 +40,7 @@ namespace YandexDisk.Client.Tests
 
             if (request.Content != null && _request != null)
             {
-                Assert.AreEqual(_request, await request.Content.ReadAsStringAsync());
+                Assert.AreEqual(_request, await request.Content.ReadAsStringAsync().ConfigureAwait(false));
             }
             
 
