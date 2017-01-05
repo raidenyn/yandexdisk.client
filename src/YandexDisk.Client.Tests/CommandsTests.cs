@@ -1,5 +1,4 @@
-﻿using System;
-using System.Net;
+﻿using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using NUnit.Framework;
@@ -15,7 +14,7 @@ namespace YandexDisk.Client.Tests
         {
             var httpClientTest = new TestHttpClient(
                 methodName: "PUT", 
-                url: TestHttpClient.BaseUrl + "resources?path=/foo", 
+                url: TestHttpClient.BaseUrl + "resources?path=%2Ffoo", 
                 httpStatusCode: HttpStatusCode.OK, 
                 result: @"
 {
@@ -43,7 +42,7 @@ namespace YandexDisk.Client.Tests
         {
             var httpClientTest = new TestHttpClient(
                 methodName: "POST", 
-                url: TestHttpClient.BaseUrl + "resources/copy?from=/foo&path=/baz&overwrite=false", 
+                url: TestHttpClient.BaseUrl + "resources/copy?from=%2Ffoo&path=%2Fbaz&overwrite=false", 
                 httpStatusCode: HttpStatusCode.Accepted, 
                 result: @"
 {
@@ -75,7 +74,7 @@ namespace YandexDisk.Client.Tests
         {
             var httpClientTest = new TestHttpClient(
                 methodName: "POST", 
-                url: TestHttpClient.BaseUrl + "resources/move?from=/foo&path=/baz&overwrite=true", 
+                url: TestHttpClient.BaseUrl + "resources/move?from=%2Ffoo&path=%2Fbaz&overwrite=true", 
                 httpStatusCode: HttpStatusCode.Accepted, 
                 result: @"
 {
@@ -108,7 +107,7 @@ namespace YandexDisk.Client.Tests
         {
             var httpClientTest = new TestHttpClient(
                 methodName: "DELETE",
-                url: TestHttpClient.BaseUrl + "resources?path=/foo&permanently=false", 
+                url: TestHttpClient.BaseUrl + "resources?path=%2Ffoo&permanently=false", 
                 httpStatusCode: HttpStatusCode.Accepted, 
                 result: @"
 {
@@ -139,7 +138,7 @@ namespace YandexDisk.Client.Tests
         {
             var httpClientTest = new TestHttpClient(
                 methodName: "DELETE",
-                url: TestHttpClient.BaseUrl + "trash/resources?path=/foo",
+                url: TestHttpClient.BaseUrl + "trash/resources?path=%2Ffoo",
                 httpStatusCode: HttpStatusCode.Accepted, 
                 result: @"
 {
@@ -167,7 +166,7 @@ namespace YandexDisk.Client.Tests
         {
             var httpClientTest = new TestHttpClient(
                 methodName: "PUT", 
-                url: TestHttpClient.BaseUrl + "trash/resources?path=/foo&name=baz&overwrite=false", 
+                url: TestHttpClient.BaseUrl + "trash/resources?path=%2Ffoo&name=baz&overwrite=false", 
                 httpStatusCode: HttpStatusCode.OK, 
                 result: @"
 {

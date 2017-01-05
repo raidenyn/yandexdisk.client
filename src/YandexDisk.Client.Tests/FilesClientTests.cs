@@ -15,7 +15,7 @@ namespace YandexDisk.Client.Tests
         {
             var httpClientTest = new TestHttpClient(
                 methodName: "GET", 
-                url: TestHttpClient.BaseUrl + "resources/upload?path=/&overwrite=true", 
+                url: TestHttpClient.BaseUrl + "resources/upload?path=%2F&overwrite=true", 
                 httpStatusCode: HttpStatusCode.OK,
                 result:  @"
 {
@@ -67,7 +67,7 @@ namespace YandexDisk.Client.Tests
         {
             var httpClientTest = new TestHttpClient(
                 methodName: "GET", 
-                url: TestHttpClient.BaseUrl + "resources/download?path=/file.txt", 
+                url: TestHttpClient.BaseUrl + "resources/download?path=%2Ffile.txt", 
                 httpStatusCode: HttpStatusCode.OK,
                 result: @"
 {

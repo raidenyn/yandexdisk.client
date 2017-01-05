@@ -53,7 +53,7 @@ namespace YandexDisk.Client.Tests
         {
             var httpClientTest = new TestHttpClient(
                 methodName: "GET", 
-                url: TestHttpClient.BaseUrl + "resources?sort=name&path=/&limit=20&offset=0", 
+                url: TestHttpClient.BaseUrl + "resources?sort=name&path=%2F&limit=20&offset=0", 
                 httpStatusCode: HttpStatusCode.OK,
                 result: @"
 {
@@ -151,7 +151,7 @@ namespace YandexDisk.Client.Tests
         {
             var httpClientTest = new TestHttpClient(
                 methodName: "GET", 
-                url: TestHttpClient.BaseUrl + "trash/resources?path=/foo/cat.png&limit=30&offset=50", 
+                url: TestHttpClient.BaseUrl + "trash/resources?path=%2Ffoo%2Fcat.png&limit=30&offset=50", 
                 httpStatusCode: HttpStatusCode.OK,
                 result: @"
 {
@@ -200,7 +200,7 @@ namespace YandexDisk.Client.Tests
         {
             var httpClientTest = new TestHttpClient(
                 methodName: "GET", 
-                url: TestHttpClient.BaseUrl + @"resources/files?media_type=""audio,compressed""&limit=30&offset=50",
+                url: TestHttpClient.BaseUrl + @"resources/files?media_type=""audio%2Ccompressed""&limit=30&offset=50",
                 httpStatusCode: HttpStatusCode.OK, 
                 result: @"
 {
@@ -279,7 +279,7 @@ namespace YandexDisk.Client.Tests
         {
             var httpClientTest = new TestHttpClient(
                 methodName: "GET", 
-                url: TestHttpClient.BaseUrl + @"resources/last-uploaded?media_type=""audio,executable""&limit=20", 
+                url: TestHttpClient.BaseUrl + @"resources/last-uploaded?media_type=""audio%2Cexecutable""&limit=20", 
                 httpStatusCode: HttpStatusCode.OK,
                 result: @"
 {
@@ -356,7 +356,7 @@ namespace YandexDisk.Client.Tests
         {
             var httpClientTest = new TestHttpClient(
                 methodName: "PATCH",
-                url: TestHttpClient.BaseUrl + @"resources?path=/foo",
+                url: TestHttpClient.BaseUrl + @"resources?path=%2Ffoo",
                 httpStatusCode: HttpStatusCode.OK,
                 request: @"{""custom_properties"":{""foo"":""1"",""bar"":""2""}}",
                 result: @"
