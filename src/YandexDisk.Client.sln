@@ -18,7 +18,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YandexDisk.Client.Net45", "
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "YandexDisk.Client.Tests", "YandexDisk.Client.Tests\YandexDisk.Client.Tests.shproj", "{B5D87289-54E3-4DCF-B087-08CE65AF6519}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YandexDisk.Client.Test.Net45", "YandexDisk.Client.Test.Net45\YandexDisk.Client.Test.Net45.csproj", "{AC563BD4-6305-4F13-86CB-C2FBE30A2101}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YandexDisk.Client.Tests.Net45", "YandexDisk.Client.Tests.Net45\YandexDisk.Client.Tests.Net45.csproj", "{AC563BD4-6305-4F13-86CB-C2FBE30A2101}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{93342508-944D-4244-95E1-2D33D5C4E40A}"
 EndProject

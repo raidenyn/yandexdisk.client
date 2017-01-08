@@ -66,4 +66,4 @@ async Task DownloadAllFilesInFolder(IDiskApi diskApi)
 ```
 
 ## How to build
-Open solution src/YandexDisk.Client.sln in Visual Studio 2015 (support C# 6 is required). Make sure that NuGet restoring option is turn on. Run build solution.
+Open solution src/YandexDisk.Client.sln in Visual Studio 2017 RC. Make sure that NuGet restoring option is turn on. Run build solution.

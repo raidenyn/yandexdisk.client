@@ -8,8 +8,8 @@
     <ProjectGuid>{AC563BD4-6305-4F13-86CB-C2FBE30A2101}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>YandexDisk.Client.Test.Net45</RootNamespace>
-    <AssemblyName>YandexDisk.Client.Test.Net45</AssemblyName>
+    <RootNamespace>YandexDisk.Client.Tests.Net45</RootNamespace>
+    <AssemblyName>YandexDisk.Client.Tests.Net45</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>
