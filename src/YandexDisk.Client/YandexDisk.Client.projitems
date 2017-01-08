@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>3e838538-a720-4ca8-ae6e-387854cd9382</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>YandexDisk.Client.S</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)AboutInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Clients\CommandsClientExtensions.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Clients\FilesClientExtension.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Clients\ICommandsClient.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Clients\IFilesClient.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Clients\IMetaInfoClient.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Http\ApiContext.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Http\Clients\CommandsClient.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Http\Clients\FilesClient.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Http\Clients\MetaInfoClient.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Http\DiskClientBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Http\DiskHttpApi.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Http\IHttpClient.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Http\ILogSaver.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Http\Logger.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Http\RealHttpClientWrapper.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Http\Serialization\DateTimeSerializer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Http\Serialization\PropertyResolver.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Http\Serialization\QueryParamsSerializer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Http\Serialization\SnakeCaseEnumConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Http\Serialization\SnakeCasePropertyNamesContractResolver.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Http\Serialization\ValueSerializer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)IDiskApi.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Protocol\CopyFileRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Protocol\DeleteFileRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Protocol\Disk.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Protocol\ErrorDescription.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Protocol\FilesResourceList.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Protocol\FilesResourceRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Protocol\LastUploadedResourceList.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Protocol\LastUploadedResourceRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Protocol\Link.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Protocol\MediaType.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Protocol\MoveFileRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Protocol\Operation.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Protocol\ProtocolObjectResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Protocol\PublicResourcesList.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Protocol\Resource.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Protocol\ResourceList.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Protocol\ResourceRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Protocol\RestoreFromTrashRequest.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)YandexApiException.cs" />
+  </ItemGroup>
+</Project>

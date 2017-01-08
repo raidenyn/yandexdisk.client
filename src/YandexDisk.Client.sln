@@ -8,11 +8,27 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		YandexDisk.Client.nuspec = YandexDisk.Client.nuspec
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YandexDisk.Client", "YandexDisk.Client\YandexDisk.Client.csproj", "{B2FE08A0-4592-414D-A889-A38C2617A631}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YandexDisk.Client.DotNet", "YandexDisk.Client.DotNet\YandexDisk.Client.DotNet.csproj", "{B2FE08A0-4592-414D-A889-A38C2617A631}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YandexDisk.Client.Tests", "YandexDisk.Client.Tests\YandexDisk.Client.Tests.csproj", "{1956C7E0-1DCF-4D86-B79E-A6C3505205AA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "YandexDisk.Client.Tests.DotNet", "YandexDisk.Client.Tests.DotNet\YandexDisk.Client.Tests.DotNet.csproj", "{1956C7E0-1DCF-4D86-B79E-A6C3505205AA}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "YandexDisk.Client", "YandexDisk.Client\YandexDisk.Client.shproj", "{3E838538-A720-4CA8-AE6E-387854CD9382}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YandexDisk.Client.Net45", "YandexDisk.Client.Net45\YandexDisk.Client.Net45.csproj", "{0144C52C-9872-4AA9-AD58-83C4262BC0F1}"
+EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "YandexDisk.Client.Tests", "YandexDisk.Client.Tests\YandexDisk.Client.Tests.shproj", "{B5D87289-54E3-4DCF-B087-08CE65AF6519}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "YandexDisk.Client.Test.Net45", "YandexDisk.Client.Test.Net45\YandexDisk.Client.Test.Net45.csproj", "{AC563BD4-6305-4F13-86CB-C2FBE30A2101}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{93342508-944D-4244-95E1-2D33D5C4E40A}"
 EndProject
 Global
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		YandexDisk.Client\YandexDisk.Client.projitems*{0144c52c-9872-4aa9-ad58-83c4262bc0f1}*SharedItemsImports = 4
+		YandexDisk.Client\YandexDisk.Client.projitems*{3e838538-a720-4ca8-ae6e-387854cd9382}*SharedItemsImports = 13
+		YandexDisk.Client.Tests\YandexDisk.Client.Tests.projitems*{ac563bd4-6305-4f13-86cb-c2fbe30a2101}*SharedItemsImports = 4
+		YandexDisk.Client.Tests\YandexDisk.Client.Tests.projitems*{b5d87289-54e3-4dcf-b087-08ce65af6519}*SharedItemsImports = 13
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Debug|x64 = Debug|x64
@@ -46,8 +62,37 @@ Global
 		{1956C7E0-1DCF-4D86-B79E-A6C3505205AA}.Release|x64.Build.0 = Release|x64
 		{1956C7E0-1DCF-4D86-B79E-A6C3505205AA}.Release|x86.ActiveCfg = Release|x86
 		{1956C7E0-1DCF-4D86-B79E-A6C3505205AA}.Release|x86.Build.0 = Release|x86
+		{0144C52C-9872-4AA9-AD58-83C4262BC0F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0144C52C-9872-4AA9-AD58-83C4262BC0F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0144C52C-9872-4AA9-AD58-83C4262BC0F1}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{0144C52C-9872-4AA9-AD58-83C4262BC0F1}.Debug|x64.Build.0 = Debug|Any CPU
+		{0144C52C-9872-4AA9-AD58-83C4262BC0F1}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{0144C52C-9872-4AA9-AD58-83C4262BC0F1}.Debug|x86.Build.0 = Debug|Any CPU
+		{0144C52C-9872-4AA9-AD58-83C4262BC0F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0144C52C-9872-4AA9-AD58-83C4262BC0F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0144C52C-9872-4AA9-AD58-83C4262BC0F1}.Release|x64.ActiveCfg = Release|Any CPU
+		{0144C52C-9872-4AA9-AD58-83C4262BC0F1}.Release|x64.Build.0 = Release|Any CPU
+		{0144C52C-9872-4AA9-AD58-83C4262BC0F1}.Release|x86.ActiveCfg = Release|Any CPU
+		{0144C52C-9872-4AA9-AD58-83C4262BC0F1}.Release|x86.Build.0 = Release|Any CPU
+		{AC563BD4-6305-4F13-86CB-C2FBE30A2101}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC563BD4-6305-4F13-86CB-C2FBE30A2101}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC563BD4-6305-4F13-86CB-C2FBE30A2101}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{AC563BD4-6305-4F13-86CB-C2FBE30A2101}.Debug|x64.Build.0 = Debug|Any CPU
+		{AC563BD4-6305-4F13-86CB-C2FBE30A2101}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{AC563BD4-6305-4F13-86CB-C2FBE30A2101}.Debug|x86.Build.0 = Debug|Any CPU
+		{AC563BD4-6305-4F13-86CB-C2FBE30A2101}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC563BD4-6305-4F13-86CB-C2FBE30A2101}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC563BD4-6305-4F13-86CB-C2FBE30A2101}.Release|x64.ActiveCfg = Release|Any CPU
+		{AC563BD4-6305-4F13-86CB-C2FBE30A2101}.Release|x64.Build.0 = Release|Any CPU
+		{AC563BD4-6305-4F13-86CB-C2FBE30A2101}.Release|x86.ActiveCfg = Release|Any CPU
+		{AC563BD4-6305-4F13-86CB-C2FBE30A2101}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{1956C7E0-1DCF-4D86-B79E-A6C3505205AA} = {93342508-944D-4244-95E1-2D33D5C4E40A}
+		{B5D87289-54E3-4DCF-B087-08CE65AF6519} = {93342508-944D-4244-95E1-2D33D5C4E40A}
+		{AC563BD4-6305-4F13-86CB-C2FBE30A2101} = {93342508-944D-4244-95E1-2D33D5C4E40A}
 	EndGlobalSection
 EndGlobal

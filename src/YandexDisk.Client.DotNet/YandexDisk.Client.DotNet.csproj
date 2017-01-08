@@ -20,4 +20,5 @@
     <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
     <PackageReference Include="WinInsider.System.Net.Http.Formatting" Version="1.0.2" />
   </ItemGroup>
+  <Import Project="..\YandexDisk.Client\YandexDisk.Client.projitems" Label="Shared" />
 </Project>
