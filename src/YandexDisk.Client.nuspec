@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
     <metadata>
         <id>YandexDisk.Client</id>
-        <version>1.0.1</version>
+        <version>1.1.0</version>
         <title>Yandex Disk RestAPI Client for .NET</title>
         <authors>Yuriy Nagaev</authors>
         <licenseUrl>https://github.com/raidenyn/yandexdisk.client/blob/master/LICENSE</licenseUrl>
@@ -17,14 +17,15 @@ Copyright (c) 2015-2016 Yuriy Nagaev</summary>
         <language />
         <tags>yandex, disk, cloud disk</tags>
         <dependencies>
-            <group targetFramework=".NETFramework4.6">
-                <dependency id="Microsoft.AspNet.WebApi.Client" version="5.2.3" />
+            <group targetFramework=".NETStandard1.6">
                 <dependency id="Newtonsoft.Json" version="9.0.1" />
+                <dependency id="WinInsider.System.Net.Http.Formatting" version="1.0.2" />
+                <dependency id="NETStandard.Library" version="1.6.1" />
             </group>
         </dependencies>
     </metadata>
     <files>
-        <file src="YandexDisk.Client\bin\Release\YandexDisk.Client.dll" target="lib\net46\YandexDisk.Client.dll" />
-        <file src="YandexDisk.Client\bin\Release\YandexDisk.Client.XML" target="lib\net46\YandexDisk.Client.XML" />
+        <file src="YandexDisk.Client\bin\Release\netstandard1.6\YandexDisk.Client.dll" target="lib\netstandard1.6\YandexDisk.Client.dll" />
+        <file src="YandexDisk.Client\bin\Release\netstandard1.6\YandexDisk.Client.xml" target="lib\netstandard1.6\YandexDisk.Client.xml" />
     </files>
 </package>

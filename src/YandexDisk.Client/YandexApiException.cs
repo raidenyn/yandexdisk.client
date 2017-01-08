@@ -9,7 +9,6 @@ namespace YandexDisk.Client
     /// Exception provide any exceptions risen on yandex server 
     /// </summary>
     [PublicAPI]
-    [Serializable]
     public class YandexApiException : Exception
     {
         /// <summary>
@@ -52,7 +51,6 @@ namespace YandexDisk.Client
     /// Exception provide authorization errors on yandex server 
     /// </summary>
     [PublicAPI]
-    [Serializable]
     public class NotAuthorizedException : YandexApiException
     {
         internal NotAuthorizedException(string reasonPhrase, ErrorDescription error)

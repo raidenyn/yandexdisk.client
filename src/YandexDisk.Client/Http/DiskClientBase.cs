@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Formatting;
+using System.Reflection;
 using System.Runtime.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
@@ -94,7 +95,7 @@ namespace YandexDisk.Client.Http
             {
                 return new ByteArrayContent(request as byte[]);
             }
-            if (typeof(Stream).IsAssignableFrom(typeof(TRequest)))
+            if (typeof(Stream).GetTypeInfo().IsAssignableFrom(typeof(TRequest)))
             {
                 return new StreamContent(request as Stream);
             }
@@ -124,7 +125,7 @@ namespace YandexDisk.Client.Http
             //If response body is null but ProtocolObjectResponse was requested, 
             //create empty object
             if (response == null &&
-                typeof (ProtocolObjectResponse).IsAssignableFrom(typeof (TResponse)))
+                typeof (ProtocolObjectResponse).GetTypeInfo().IsAssignableFrom(typeof (TResponse)))
             {
                 response = new TResponse();
             }
@@ -194,7 +195,7 @@ namespace YandexDisk.Client.Http
             {
                 return await responseMessage.Content.ReadAsByteArrayAsync().ConfigureAwait(false) as TResponse;
             }
-            if (typeof(Stream).IsAssignableFrom(typeof(TResponse)))
+            if (typeof(Stream).GetTypeInfo().IsAssignableFrom(typeof(TResponse)))
             {
                 return await responseMessage.Content.ReadAsStreamAsync().ConfigureAwait(false) as TResponse;
             }

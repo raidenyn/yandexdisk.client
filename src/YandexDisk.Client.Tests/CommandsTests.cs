@@ -1,15 +1,15 @@
 ﻿using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
-using NUnit.Framework;
 using YandexDisk.Client.Http;
 using YandexDisk.Client.Protocol;
+using Xunit;
 
 namespace YandexDisk.Client.Tests
 {
     public class CommandsTests
     {
-        [Test]
+        [Fact]
         public async Task CreateDictionaryTest()
         {
             var httpClientTest = new TestHttpClient(
@@ -32,12 +32,12 @@ namespace YandexDisk.Client.Tests
             Link result = await diskClient.Commands.CreateDictionaryAsync("/foo", CancellationToken.None).ConfigureAwait(false);
 
             Assert.NotNull(result);
-            Assert.AreEqual("https://cloud-api.yandex.net/v1/disk/resources?path=disk%3A%2FMusic", result.Href);
-            Assert.AreEqual("GET", result.Method);
-            Assert.AreEqual(false, result.Templated);
+            Assert.Equal("https://cloud-api.yandex.net/v1/disk/resources?path=disk%3A%2FMusic", result.Href);
+            Assert.Equal("GET", result.Method);
+            Assert.Equal(false, result.Templated);
         }
 
-        [Test]
+        [Fact]
         public async Task CopyTest()
         {
             var httpClientTest = new TestHttpClient(
@@ -64,12 +64,12 @@ namespace YandexDisk.Client.Tests
             }, CancellationToken.None).ConfigureAwait(false);
 
             Assert.NotNull(result);
-            Assert.AreEqual("https://cloud-api.yandex.net/v1/disk/operations?id=33ca7d03ab21ct41b4a40182e78d828a3f8b72cdb5f4c0e94cc4b1449a63a2fe", result.Href);
-            Assert.AreEqual("GET", result.Method);
-            Assert.AreEqual(false, result.Templated);
+            Assert.Equal("https://cloud-api.yandex.net/v1/disk/operations?id=33ca7d03ab21ct41b4a40182e78d828a3f8b72cdb5f4c0e94cc4b1449a63a2fe", result.Href);
+            Assert.Equal("GET", result.Method);
+            Assert.Equal(false, result.Templated);
         }
 
-        [Test]
+        [Fact]
         public async Task MoveTest()
         {
             var httpClientTest = new TestHttpClient(
@@ -97,12 +97,12 @@ namespace YandexDisk.Client.Tests
             }, CancellationToken.None).ConfigureAwait(false);
 
             Assert.NotNull(result);
-            Assert.AreEqual("https://cloud-api.yandex.net/v1/disk/operations?id=33ca7d03ab21ct41b4a40182e78d828a3f8b72cdb5f4c0e94cc4b1449a63a2fe", result.Href);
-            Assert.AreEqual("GET", result.Method);
-            Assert.AreEqual(false, result.Templated);
+            Assert.Equal("https://cloud-api.yandex.net/v1/disk/operations?id=33ca7d03ab21ct41b4a40182e78d828a3f8b72cdb5f4c0e94cc4b1449a63a2fe", result.Href);
+            Assert.Equal("GET", result.Method);
+            Assert.Equal(false, result.Templated);
         }
 
-        [Test]
+        [Fact]
         public async Task DeleteTest()
         {
             var httpClientTest = new TestHttpClient(
@@ -128,12 +128,12 @@ namespace YandexDisk.Client.Tests
             }, CancellationToken.None).ConfigureAwait(false);
 
             Assert.NotNull(result);
-            Assert.AreEqual("https://cloud-api.yandex.net/v1/disk/operations?id=d80c269ce4eb16c0207f0a15t4a31415313452f9e950cd9576f36b1146ee0e42", result.Href);
-            Assert.AreEqual("GET", result.Method);
-            Assert.AreEqual(false, result.Templated);
+            Assert.Equal("https://cloud-api.yandex.net/v1/disk/operations?id=d80c269ce4eb16c0207f0a15t4a31415313452f9e950cd9576f36b1146ee0e42", result.Href);
+            Assert.Equal("GET", result.Method);
+            Assert.Equal(false, result.Templated);
         }
 
-        [Test]
+        [Fact]
         public async Task EmptyTrashTest()
         {
             var httpClientTest = new TestHttpClient(
@@ -156,12 +156,12 @@ namespace YandexDisk.Client.Tests
             Link result = await diskClient.Commands.EmptyTrashAsync(path: "/foo", cancellationToken: CancellationToken.None).ConfigureAwait(false);
 
             Assert.NotNull(result);
-            Assert.AreEqual("https://cloud-api.yandex.net/v1/disk/operations?id=d80c269ce4eb16c0207f0a15t4a31415313452f9e950cd9576f36b1146ee0e42", result.Href);
-            Assert.AreEqual("GET", result.Method);
-            Assert.AreEqual(false, result.Templated);
+            Assert.Equal("https://cloud-api.yandex.net/v1/disk/operations?id=d80c269ce4eb16c0207f0a15t4a31415313452f9e950cd9576f36b1146ee0e42", result.Href);
+            Assert.Equal("GET", result.Method);
+            Assert.Equal(false, result.Templated);
         }
 
-        [Test]
+        [Fact]
         public async Task RestoreFromTrashTest()
         {
             var httpClientTest = new TestHttpClient(
@@ -188,12 +188,12 @@ namespace YandexDisk.Client.Tests
             }, CancellationToken.None).ConfigureAwait(false);
 
             Assert.NotNull(result);
-            Assert.AreEqual("https://cloud-api.yandex.net/v1/disk/resources?path=disk%3A%2Fbar%2Fselfie.png", result.Href);
-            Assert.AreEqual("GET", result.Method);
-            Assert.AreEqual(false, result.Templated);
+            Assert.Equal("https://cloud-api.yandex.net/v1/disk/resources?path=disk%3A%2Fbar%2Fselfie.png", result.Href);
+            Assert.Equal("GET", result.Method);
+            Assert.Equal(false, result.Templated);
         }
 
-        [Test]
+        [Fact]
         public async Task GetOperationStatusTest()
         {
             var httpClientTest = new TestHttpClient(
@@ -218,10 +218,10 @@ namespace YandexDisk.Client.Tests
             }, CancellationToken.None).ConfigureAwait(false);
 
             Assert.NotNull(result);
-            Assert.AreEqual(OperationStatus.Success, result.Status);
+            Assert.Equal(OperationStatus.Success, result.Status);
         }
 
-        [Test]
+        [Fact]
         public async Task GetOperationStatusTest_InProgress()
         {
             var httpClientTest = new TestHttpClient(
@@ -246,7 +246,7 @@ namespace YandexDisk.Client.Tests
             }, CancellationToken.None).ConfigureAwait(false);
 
             Assert.NotNull(result);
-            Assert.AreEqual(OperationStatus.InProgress, result.Status);
+            Assert.Equal(OperationStatus.InProgress, result.Status);
         }
     }
 }

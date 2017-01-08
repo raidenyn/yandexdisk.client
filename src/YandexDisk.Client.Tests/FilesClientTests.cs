@@ -2,15 +2,15 @@
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
-using NUnit.Framework;
 using YandexDisk.Client.Http;
 using YandexDisk.Client.Protocol;
+using Xunit;
 
 namespace YandexDisk.Client.Tests
 {
     public class FilesClientTests
     {
-        [Test]
+        [Fact]
         public async Task GetUploadLinkTest()
         {
             var httpClientTest = new TestHttpClient(
@@ -33,12 +33,12 @@ namespace YandexDisk.Client.Tests
             Link result = await diskClient.Files.GetUploadLinkAsync("/", true, CancellationToken.None).ConfigureAwait(false);
 
             Assert.NotNull(result);
-            Assert.AreEqual("https://uploader1d.dst.yandex.net:443/upload-target/...", result.Href);
-            Assert.AreEqual("PUT", result.Method);
-            Assert.AreEqual(false, result.Templated);
+            Assert.Equal("https://uploader1d.dst.yandex.net:443/upload-target/...", result.Href);
+            Assert.Equal("PUT", result.Method);
+            Assert.Equal(false, result.Templated);
         }
 
-        [Test]
+        [Fact]
         public async Task UploadTest()
         {
             var link = new Link
@@ -62,7 +62,7 @@ namespace YandexDisk.Client.Tests
             await diskClient.Files.UploadAsync(link, new MemoryStream(), CancellationToken.None).ConfigureAwait(false);
         }
 
-        [Test]
+        [Fact]
         public async Task GetDownloadLinkTest()
         {
             var httpClientTest = new TestHttpClient(
@@ -85,12 +85,12 @@ namespace YandexDisk.Client.Tests
             Link result = await diskClient.Files.GetDownloadLinkAsync("/file.txt", CancellationToken.None).ConfigureAwait(false);
 
             Assert.NotNull(result);
-            Assert.AreEqual("https://downloader.dst.yandex.ru/disk/...", result.Href);
-            Assert.AreEqual("GET", result.Method);
-            Assert.AreEqual(false, result.Templated);
+            Assert.Equal("https://downloader.dst.yandex.ru/disk/...", result.Href);
+            Assert.Equal("GET", result.Method);
+            Assert.Equal(false, result.Templated);
         }
 
-        [Test]
+        [Fact]
         public async Task DownloadTest()
         {
             var link = new Link
@@ -115,7 +115,7 @@ namespace YandexDisk.Client.Tests
 
             var content = new StreamReader(stream).ReadToEnd();
 
-            Assert.AreEqual(@"Test file content", content);
+            Assert.Equal(@"Test file content", content);
         }
     }
 }

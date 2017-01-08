@@ -28,7 +28,7 @@ namespace YandexDisk.Client.Clients
             Operation operation;
             do
             {
-                Thread.Sleep(pullPeriod.Value);
+                await Task.Delay(pullPeriod.Value);
                 operation = await client.GetOperationStatus(operationLink, cancellationToken).ConfigureAwait(false);
             } while (operation.Status == OperationStatus.InProgress &&
                      !cancellationToken.IsCancellationRequested);

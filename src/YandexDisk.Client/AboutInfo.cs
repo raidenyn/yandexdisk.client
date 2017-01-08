@@ -33,14 +33,15 @@ namespace YandexDisk.Client
         public string Version => _version ?? (_version = _assembly.GetName().Version.ToString());
 
         private TAttr GetAttribute<TAttr>()
+            where TAttr: System.Attribute
         {
-            return (TAttr)_assembly.GetCustomAttributes(typeof(TAttr), true).First();
+            return (TAttr)_assembly.GetCustomAttributes(typeof(TAttr)).First();
         }
 
         /// <summary>
         /// Default Info for IDiskApi
         /// </summary>
         [PublicAPI, NotNull]
-        public static readonly AboutInfo Client = new AboutInfo(typeof(IDiskApi).Assembly);
+        public static readonly AboutInfo Client = new AboutInfo(typeof(IDiskApi).GetTypeInfo().Assembly);
     }
 }

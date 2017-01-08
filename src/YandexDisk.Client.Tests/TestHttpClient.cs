@@ -3,8 +3,8 @@ using System.Net.Http;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using NUnit.Framework;
 using YandexDisk.Client.Http;
+using Xunit;
 
 namespace YandexDisk.Client.Tests
 {
@@ -35,12 +35,12 @@ namespace YandexDisk.Client.Tests
         public async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken = default(CancellationToken))
         {
             Assert.NotNull(request);
-            Assert.AreEqual(_methodName, request.Method.Method);
-            Assert.AreEqual(_url, request.RequestUri.ToString());
+            Assert.Equal(_methodName, request.Method.Method);
+            Assert.Equal(_url, request.RequestUri.ToString());
 
             if (request.Content != null && _request != null)
             {
-                Assert.AreEqual(_request, await request.Content.ReadAsStringAsync().ConfigureAwait(false));
+                Assert.Equal(_request, await request.Content.ReadAsStringAsync().ConfigureAwait(false));
             }
             
 
