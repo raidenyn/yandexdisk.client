@@ -121,8 +121,8 @@ namespace YandexDisk.Client.Tests
             Assert.Equal("disk:/foo/bar", firstItem.Path);
             Assert.Equal(ResourceType.Dir, firstItem.Type);
             Assert.Equal("bar", firstItem.Name);
-            Assert.Equal(new DateTime(2014, 04, 22, 10, 32, 49, DateTimeKind.Local), firstItem.Created);
-            Assert.Equal(new DateTime(2014, 04, 22, 10, 32, 49, DateTimeKind.Local), firstItem.Modified);
+            Assert.Equal(new DateTime(2014, 04, 22, 6, 32, 49), firstItem.Created.ToUniversalTime());
+            Assert.Equal(new DateTime(2014, 04, 22, 6, 32, 49), firstItem.Modified.ToUniversalTime());
 
             Resource secondItem = result.Embedded.Items[1];
             Assert.NotNull(secondItem);
@@ -133,13 +133,13 @@ namespace YandexDisk.Client.Tests
             Assert.Equal("4334dc6379c8f95ddf11b9508cfea271", secondItem.Md5);
             Assert.Equal("image/png", secondItem.MimeType);
             Assert.Equal(34567, secondItem.Size);
-            Assert.Equal(new DateTime(2014, 04, 21, 14, 57, 13, DateTimeKind.Local), secondItem.Created);
-            Assert.Equal(new DateTime(2014, 04, 21, 14, 57, 14, DateTimeKind.Local), secondItem.Modified);
+            Assert.Equal(new DateTime(2014, 04, 21, 10, 57, 13), secondItem.Created.ToUniversalTime());
+            Assert.Equal(new DateTime(2014, 04, 21, 10, 57, 14), secondItem.Modified.ToUniversalTime());
 
             Assert.Equal("foo", result.Name);
             //Assert.Equal("custom_properties", result.CustomProperties);
-            Assert.Equal(new DateTime(2014, 04, 21, 14, 54, 42, DateTimeKind.Local), result.Created);
-            Assert.Equal(new DateTime(2014, 04, 22, 10, 32, 49, DateTimeKind.Local), result.Modified);
+            Assert.Equal(new DateTime(2014, 04, 21, 10, 54, 42), result.Created.ToUniversalTime());
+            Assert.Equal(new DateTime(2014, 04, 22,  6, 32, 49), result.Modified.ToUniversalTime());
             Assert.Equal("disk:/foo", result.Path);
             Assert.Equal(ResourceType.Dir, result.Type);
 
@@ -191,8 +191,8 @@ namespace YandexDisk.Client.Tests
             Assert.Equal("02bab05c02537e53dedd408261e0aadf", result.Md5);
             Assert.Equal("image/png", result.MimeType);
             Assert.Equal(903337, result.Size);
-            Assert.Equal(new DateTime(2014, 07, 16, 13, 07, 45, DateTimeKind.Local), result.Created);
-            Assert.Equal(new DateTime(2014, 07, 16, 13, 07, 45, DateTimeKind.Local), result.Modified);
+            Assert.Equal(new DateTime(2014, 07, 16, 09, 07, 45), result.Created.ToUniversalTime());
+            Assert.Equal(new DateTime(2014, 07, 16, 09, 07, 45), result.Modified.ToUniversalTime());
         }
 
         [Fact]
@@ -259,8 +259,8 @@ namespace YandexDisk.Client.Tests
             Assert.Equal("53f4dc6379c8f95ddf11b9508cfea271", firstItem.Md5);
             Assert.Equal("image/png", firstItem.MimeType);
             Assert.Equal(54321, firstItem.Size);
-            Assert.Equal(new DateTime(2014, 04, 22, 14, 57, 13, DateTimeKind.Local), firstItem.Created);
-            Assert.Equal(new DateTime(2014, 04, 22, 14, 57, 14, DateTimeKind.Local), firstItem.Modified);
+            Assert.Equal(new DateTime(2014, 04, 22, 10, 57, 13), firstItem.Created.ToUniversalTime());
+            Assert.Equal(new DateTime(2014, 04, 22, 10, 57, 14), firstItem.Modified.ToUniversalTime());
 
             var secondItem = result.Items[1];
             Assert.Equal("photo1.png", secondItem.Name);
@@ -270,8 +270,8 @@ namespace YandexDisk.Client.Tests
             Assert.Equal("4334dc6379c8f95ddf11b9508cfea271", secondItem.Md5);
             Assert.Equal("image/png", secondItem.MimeType);
             Assert.Equal(34567, secondItem.Size);
-            Assert.Equal(new DateTime(2014, 04, 21, 14, 57, 13, DateTimeKind.Local), secondItem.Created);
-            Assert.Equal(new DateTime(2014, 04, 21, 14, 57, 14, DateTimeKind.Local), secondItem.Modified);
+            Assert.Equal(new DateTime(2014, 04, 21, 10, 57, 13), secondItem.Created.ToUniversalTime());
+            Assert.Equal(new DateTime(2014, 04, 21, 10, 57, 14), secondItem.Modified.ToUniversalTime());
         }
 
         [Fact]
@@ -335,8 +335,8 @@ namespace YandexDisk.Client.Tests
             Assert.Equal("53f4dc6379c8f95ddf11b9508cfea271", firstItem.Md5);
             Assert.Equal("image/png", firstItem.MimeType);
             Assert.Equal(54321, firstItem.Size);
-            Assert.Equal(new DateTime(2014, 04, 22, 14, 57, 13, DateTimeKind.Local), firstItem.Created);
-            Assert.Equal(new DateTime(2014, 04, 22, 14, 57, 14, DateTimeKind.Local), firstItem.Modified);
+            Assert.Equal(new DateTime(2014, 04, 22, 10, 57, 13), firstItem.Created.ToUniversalTime());
+            Assert.Equal(new DateTime(2014, 04, 22, 10, 57, 14), firstItem.Modified.ToUniversalTime());
 
             var secondItem = result.Items[1];
             Assert.Equal("photo1.png", secondItem.Name);
@@ -346,8 +346,8 @@ namespace YandexDisk.Client.Tests
             Assert.Equal("4334dc6379c8f95ddf11b9508cfea271", secondItem.Md5);
             Assert.Equal("image/png", secondItem.MimeType);
             Assert.Equal(34567, secondItem.Size);
-            Assert.Equal(new DateTime(2014, 04, 21, 14, 57, 13, DateTimeKind.Local), secondItem.Created);
-            Assert.Equal(new DateTime(2014, 04, 21, 14, 57, 14, DateTimeKind.Local), secondItem.Modified);
+            Assert.Equal(new DateTime(2014, 04, 21, 10, 57, 13), secondItem.Created.ToUniversalTime());
+            Assert.Equal(new DateTime(2014, 04, 21, 10, 57, 14), secondItem.Modified.ToUniversalTime());
         }
 
 

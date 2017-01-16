@@ -159,7 +159,7 @@ namespace YandexDisk.Client.Http
 
                     await logger.SetResponseAsync(response).ConfigureAwait(false);
 
-                    await EnsureSuccessStatusCode(response).ConfigureAwait(false);
+                    await EnsureSuccessStatusCode(response, cancellationToken).ConfigureAwait(false);
 
                     logger.EndWithSuccess();
 
@@ -271,11 +271,11 @@ namespace YandexDisk.Client.Http
             return RequestAsync<TRequest, TParams, TResponse>(relativeUrl, parameters, request, new HttpMethod("PATCH"), cancellationToken);
         }
 
-        private async Task EnsureSuccessStatusCode([NotNull] HttpResponseMessage response)
+        private async Task EnsureSuccessStatusCode([NotNull] HttpResponseMessage response, CancellationToken cancellationToken)
         {
             if (!response.IsSuccessStatusCode)
             {
-                var error = await TryGetErrorDescriptionAsync(response).ConfigureAwait(false);
+                var error = await TryGetErrorDescriptionAsync(response, cancellationToken).ConfigureAwait(false);
 
                 response.Content?.Dispose();
 
@@ -290,12 +290,12 @@ namespace YandexDisk.Client.Http
         }
 
         [ItemCanBeNull]
-        private async Task<ErrorDescription> TryGetErrorDescriptionAsync([NotNull] HttpResponseMessage response)
+        private async Task<ErrorDescription> TryGetErrorDescriptionAsync([NotNull] HttpResponseMessage response, CancellationToken cancellationToken)
         {
             try
             {
                 return response.Content != null
-                    ? await response.Content.ReadAsAsync<ErrorDescription>().ConfigureAwait(false)
+                    ? await response.Content.ReadAsAsync<ErrorDescription>(_defaultFormatters, cancellationToken).ConfigureAwait(false)
                     : null;
             }
             catch (SerializationException) //unexpected data in content
