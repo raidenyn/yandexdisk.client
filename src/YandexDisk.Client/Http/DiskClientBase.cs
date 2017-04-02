@@ -27,7 +27,7 @@ namespace YandexDisk.Client.Http
                     ContractResolver = new SnakeCasePropertyNamesContractResolver(),
                     Converters = { new SnakeCaseEnumConverter() },
                     DateFormatHandling = DateFormatHandling.IsoDateFormat,
-                    DateTimeZoneHandling = DateTimeZoneHandling.Unspecified,
+                    DateTimeZoneHandling = DateTimeZoneHandling.Utc,
                     DateParseHandling = DateParseHandling.DateTime
                 }
             }
@@ -75,7 +75,6 @@ namespace YandexDisk.Client.Http
 
             return uriBuilder.Uri;
         }
-
 
         [CanBeNull]
         private HttpContent GetContent<TRequest>([CanBeNull] TRequest request)

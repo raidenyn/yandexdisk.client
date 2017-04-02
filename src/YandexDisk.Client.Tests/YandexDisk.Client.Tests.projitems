@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>6f20a90d-f239-4fe7-9ccc-736786c7d853</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>YandexDisk.Client.Tests</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)CommandsTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)FilesClientTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)MetaInfoClientTests.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)TestHttpClient.cs" />
+  </ItemGroup>
+</Project>

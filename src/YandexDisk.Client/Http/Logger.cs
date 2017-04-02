@@ -94,12 +94,12 @@ namespace YandexDisk.Client.Http
 
         public Task SetRequestAsync(HttpRequestMessage request)
         {
-            return Task.FromResult<object>(null);
+            return TaskPf.CompletedTask;
         }
 
         public Task SetResponseAsync(HttpResponseMessage httpResponseMessage)
         {
-            return Task.FromResult<object>(null);
+            return TaskPf.CompletedTask;
         }
 
         public void EndWithSuccess()

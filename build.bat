@@ -10,8 +10,10 @@ if not "%PackageVersion%" == "" (
 )
 
 REM Package restore
-call %NuGet% restore src\YandexDisk.Client\packages.config -OutputDirectory %cd%\src\packages -NonInteractive
-call %NuGet% restore src\YandexDisk.Client.Tests\packages.config -OutputDirectory %cd%\src\packages -NonInteractive
+call %NuGet% restore src\YandexDisk.Client.Net40\packages.config -OutputDirectory %cd%\src\packages -NonInteractive
+call %NuGet% restore src\YandexDisk.Client.Net45\packages.config -OutputDirectory %cd%\src\packages -NonInteractive
+call %NuGet% restore src\YandexDisk.Client.Tests.Net40\packages.config -OutputDirectory %cd%\src\packages -NonInteractive
+call %NuGet% restore src\YandexDisk.Client.Tests.Net45\packages.config -OutputDirectory %cd%\src\packages -NonInteractive
 
 REM Build
 "%MsBuildExe%" src\YandexDisk.Client.sln /p:Configuration="%config%" /m /v:M /fl /flp:LogFile=msbuild.log;Verbosity=Normal /nr:false

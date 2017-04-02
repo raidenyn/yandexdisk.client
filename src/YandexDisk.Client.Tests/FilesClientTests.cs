@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using NUnit.Framework;
 using YandexDisk.Client.Http;
 using YandexDisk.Client.Protocol;
+using YandexDisk.Client.Tests.Polyfils;
 
 namespace YandexDisk.Client.Tests
 {
@@ -15,7 +16,7 @@ namespace YandexDisk.Client.Tests
         {
             var httpClientTest = new TestHttpClient(
                 methodName: "GET", 
-                url: TestHttpClient.BaseUrl + "resources/upload?path=%2F&overwrite=true", 
+                url: TestHttpClient.BaseUrl + UriPf.EscapePath("resources/upload?path=/&overwrite=true"),
                 httpStatusCode: HttpStatusCode.OK,
                 result:  @"
 {
@@ -67,7 +68,7 @@ namespace YandexDisk.Client.Tests
         {
             var httpClientTest = new TestHttpClient(
                 methodName: "GET", 
-                url: TestHttpClient.BaseUrl + "resources/download?path=%2Ffile.txt", 
+                url: TestHttpClient.BaseUrl + UriPf.EscapePath("resources/download?path=/file.txt"),
                 httpStatusCode: HttpStatusCode.OK,
                 result: @"
 {

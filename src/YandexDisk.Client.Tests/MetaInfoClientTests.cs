@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using NUnit.Framework;
 using YandexDisk.Client.Http;
 using YandexDisk.Client.Protocol;
+using YandexDisk.Client.Tests.Polyfils;
 
 namespace YandexDisk.Client.Tests
 {
@@ -53,7 +54,7 @@ namespace YandexDisk.Client.Tests
         {
             var httpClientTest = new TestHttpClient(
                 methodName: "GET", 
-                url: TestHttpClient.BaseUrl + "resources?sort=name&path=%2F&limit=20&offset=0", 
+                url: TestHttpClient.BaseUrl + UriPf.EscapePath("resources?sort=name&path=/&limit=20&offset=0"), 
                 httpStatusCode: HttpStatusCode.OK,
                 result: @"
 {
@@ -121,8 +122,8 @@ namespace YandexDisk.Client.Tests
             Assert.AreEqual("disk:/foo/bar", firstItem.Path);
             Assert.AreEqual(ResourceType.Dir, firstItem.Type);
             Assert.AreEqual("bar", firstItem.Name);
-            Assert.AreEqual(new DateTime(2014, 04, 22, 10, 32, 49, DateTimeKind.Local), firstItem.Created);
-            Assert.AreEqual(new DateTime(2014, 04, 22, 10, 32, 49, DateTimeKind.Local), firstItem.Modified);
+            Assert.AreEqual(new DateTime(2014, 04, 22, 6, 32, 49), firstItem.Created);
+            Assert.AreEqual(new DateTime(2014, 04, 22, 6, 32, 49), firstItem.Modified);
 
             Resource secondItem = result.Embedded.Items[1];
             Assert.NotNull(secondItem);
@@ -133,13 +134,13 @@ namespace YandexDisk.Client.Tests
             Assert.AreEqual("4334dc6379c8f95ddf11b9508cfea271", secondItem.Md5);
             Assert.AreEqual("image/png", secondItem.MimeType);
             Assert.AreEqual(34567, secondItem.Size);
-            Assert.AreEqual(new DateTime(2014, 04, 21, 14, 57, 13, DateTimeKind.Local), secondItem.Created);
-            Assert.AreEqual(new DateTime(2014, 04, 21, 14, 57, 14, DateTimeKind.Local), secondItem.Modified);
+            Assert.AreEqual(new DateTime(2014, 04, 21, 10, 57, 13), secondItem.Created.ToUniversalTime());
+            Assert.AreEqual(new DateTime(2014, 04, 21, 10, 57, 14), secondItem.Modified.ToUniversalTime());
 
             Assert.AreEqual("foo", result.Name);
             //Assert.AreEqual("custom_properties", result.CustomProperties);
-            Assert.AreEqual(new DateTime(2014, 04, 21, 14, 54, 42, DateTimeKind.Local), result.Created);
-            Assert.AreEqual(new DateTime(2014, 04, 22, 10, 32, 49, DateTimeKind.Local), result.Modified);
+            Assert.AreEqual(new DateTime(2014, 04, 21, 10, 54, 42), result.Created.ToUniversalTime());
+            Assert.AreEqual(new DateTime(2014, 04, 22, 6, 32, 49), result.Modified.ToUniversalTime());
             Assert.AreEqual("disk:/foo", result.Path);
             Assert.AreEqual(ResourceType.Dir, result.Type);
 
@@ -150,8 +151,8 @@ namespace YandexDisk.Client.Tests
         public async Task GetTrashInfoTest()
         {
             var httpClientTest = new TestHttpClient(
-                methodName: "GET", 
-                url: TestHttpClient.BaseUrl + "trash/resources?path=%2Ffoo%2Fcat.png&limit=30&offset=50", 
+                methodName: "GET",
+                url: TestHttpClient.BaseUrl + UriPf.EscapePath("trash/resources?path=/foo/cat.png&limit=30&offset=50"),
                 httpStatusCode: HttpStatusCode.OK,
                 result: @"
 {
@@ -191,8 +192,8 @@ namespace YandexDisk.Client.Tests
             Assert.AreEqual("02bab05c02537e53dedd408261e0aadf", result.Md5);
             Assert.AreEqual("image/png", result.MimeType);
             Assert.AreEqual(903337, result.Size);
-            Assert.AreEqual(new DateTime(2014, 07, 16, 13, 07, 45, DateTimeKind.Local), result.Created);
-            Assert.AreEqual(new DateTime(2014, 07, 16, 13, 07, 45, DateTimeKind.Local), result.Modified);
+            Assert.AreEqual(new DateTime(2014, 07, 16, 9, 07, 45), result.Created);
+            Assert.AreEqual(new DateTime(2014, 07, 16, 9, 07, 45), result.Modified);
         }
 
         [Test]
@@ -200,8 +201,8 @@ namespace YandexDisk.Client.Tests
         {
             var httpClientTest = new TestHttpClient(
                 methodName: "GET", 
-                url: TestHttpClient.BaseUrl + @"resources/files?media_type=""audio%2Ccompressed""&limit=30&offset=50",
-                httpStatusCode: HttpStatusCode.OK, 
+                url: TestHttpClient.BaseUrl + UriPf.EscapePath(@"resources/files?media_type=""audio,compressed""&limit=30&offset=50"),
+                httpStatusCode: HttpStatusCode.OK,
                 result: @"
 {
   ""items"": [
@@ -259,8 +260,8 @@ namespace YandexDisk.Client.Tests
             Assert.AreEqual("53f4dc6379c8f95ddf11b9508cfea271", firstItem.Md5);
             Assert.AreEqual("image/png", firstItem.MimeType);
             Assert.AreEqual(54321, firstItem.Size);
-            Assert.AreEqual(new DateTime(2014, 04, 22, 14, 57, 13, DateTimeKind.Local), firstItem.Created);
-            Assert.AreEqual(new DateTime(2014, 04, 22, 14, 57, 14, DateTimeKind.Local), firstItem.Modified);
+            Assert.AreEqual(new DateTime(2014, 04, 22, 10, 57, 13), firstItem.Created);
+            Assert.AreEqual(new DateTime(2014, 04, 22, 10, 57, 14), firstItem.Modified);
 
             var secondItem = result.Items[1];
             Assert.AreEqual("photo1.png", secondItem.Name);
@@ -270,8 +271,8 @@ namespace YandexDisk.Client.Tests
             Assert.AreEqual("4334dc6379c8f95ddf11b9508cfea271", secondItem.Md5);
             Assert.AreEqual("image/png", secondItem.MimeType);
             Assert.AreEqual(34567, secondItem.Size);
-            Assert.AreEqual(new DateTime(2014, 04, 21, 14, 57, 13, DateTimeKind.Local), secondItem.Created);
-            Assert.AreEqual(new DateTime(2014, 04, 21, 14, 57, 14, DateTimeKind.Local), secondItem.Modified);
+            Assert.AreEqual(new DateTime(2014, 04, 21, 10, 57, 13), secondItem.Created);
+            Assert.AreEqual(new DateTime(2014, 04, 21, 10, 57, 14), secondItem.Modified);
         }
 
         [Test]
@@ -279,7 +280,7 @@ namespace YandexDisk.Client.Tests
         {
             var httpClientTest = new TestHttpClient(
                 methodName: "GET", 
-                url: TestHttpClient.BaseUrl + @"resources/last-uploaded?media_type=""audio%2Cexecutable""&limit=20", 
+                url: TestHttpClient.BaseUrl + UriPf.EscapePath(@"resources/last-uploaded?media_type=""audio,executable""&limit=20"), 
                 httpStatusCode: HttpStatusCode.OK,
                 result: @"
 {
@@ -335,8 +336,8 @@ namespace YandexDisk.Client.Tests
             Assert.AreEqual("53f4dc6379c8f95ddf11b9508cfea271", firstItem.Md5);
             Assert.AreEqual("image/png", firstItem.MimeType);
             Assert.AreEqual(54321, firstItem.Size);
-            Assert.AreEqual(new DateTime(2014, 04, 22, 14, 57, 13, DateTimeKind.Local), firstItem.Created);
-            Assert.AreEqual(new DateTime(2014, 04, 22, 14, 57, 14, DateTimeKind.Local), firstItem.Modified);
+            Assert.AreEqual(new DateTime(2014, 04, 22, 10, 57, 13), firstItem.Created);
+            Assert.AreEqual(new DateTime(2014, 04, 22, 10, 57, 14), firstItem.Modified);
 
             var secondItem = result.Items[1];
             Assert.AreEqual("photo1.png", secondItem.Name);
@@ -346,8 +347,8 @@ namespace YandexDisk.Client.Tests
             Assert.AreEqual("4334dc6379c8f95ddf11b9508cfea271", secondItem.Md5);
             Assert.AreEqual("image/png", secondItem.MimeType);
             Assert.AreEqual(34567, secondItem.Size);
-            Assert.AreEqual(new DateTime(2014, 04, 21, 14, 57, 13, DateTimeKind.Local), secondItem.Created);
-            Assert.AreEqual(new DateTime(2014, 04, 21, 14, 57, 14, DateTimeKind.Local), secondItem.Modified);
+            Assert.AreEqual(new DateTime(2014, 04, 21, 10, 57, 13), secondItem.Created);
+            Assert.AreEqual(new DateTime(2014, 04, 21, 10, 57, 14), secondItem.Modified);
         }
 
 
@@ -356,7 +357,7 @@ namespace YandexDisk.Client.Tests
         {
             var httpClientTest = new TestHttpClient(
                 methodName: "PATCH",
-                url: TestHttpClient.BaseUrl + @"resources?path=%2Ffoo",
+                url: TestHttpClient.BaseUrl + UriPf.EscapePath(@"resources?path=/foo"),
                 httpStatusCode: HttpStatusCode.OK,
                 request: @"{""custom_properties"":{""foo"":""1"",""bar"":""2""}}",
                 result: @"
