@@ -23,6 +23,7 @@ Copyright (c) 2015-2016 Yuriy Nagaev</summary>
             </group>
             <group targetFramework=".NETFramework4.6">
                 <dependency id="Microsoft.AspNet.WebApi.Client" version="5.2.3" />
+                <dependency id="CommandLineParser" version="2.1.1-beta" />
             </group>
         </dependencies>
     </metadata>
@@ -31,5 +32,6 @@ Copyright (c) 2015-2016 Yuriy Nagaev</summary>
         <file src="YandexDisk.Client.Net40\bin\Release\YandexDisk.Client.xml" target="lib\net40\YandexDisk.Client.xml" />
         <file src="YandexDisk.Client.Net45\bin\Release\YandexDisk.Client.dll" target="lib\net46\YandexDisk.Client.dll" />
         <file src="YandexDisk.Client.Net45\bin\Release\YandexDisk.Client.xml" target="lib\net46\YandexDisk.Client.xml" />
+        <file src="YandexDisk.Client.Net45\bin\Release\yadisk.exe" target="lib\net46\yadisk.exe" />
     </files>
 </package>
