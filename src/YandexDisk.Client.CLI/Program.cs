@@ -1,16 +1,19 @@
 ﻿using CommandLine;
 using CommandLine.Text;
 using System;
-using System.IO;
-using System.IO.Compression;
 using System.Threading.Tasks;
 using YandexDisk.Client.Http;
 
 namespace YandexDisk.Client.CLI
 {
-    class Program
+    public class YandexDiskCliProgram
     {
-        static void Main(string[] args)
+        public static int Main(string[] args)
+        {
+            return new YandexDiskCliProgram().Run(args);
+        }
+
+        public int Run(string[] args)
         {
             try
             {
@@ -21,92 +24,36 @@ namespace YandexDisk.Client.CLI
                 if (parseResult.Tag == ParserResultType.NotParsed)
                 {
                     Console.WriteLine(HelpText.AutoBuild(parseResult));
-                }                
+                }
+
+                return 0;
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                Console.Error.WriteLine(ex.Message);
+                return -1;
             }
         }
 
-        private static void Upload(UploadOptions options)
+        private void Upload(UploadOptions options)
         {
-            var diskClient = new DiskHttpApi(options.AccessToken);
+            SyncAwait(new Upload(CreateDiskClient(options)).ExecuteAsync(options));
+        }
 
-            Console.WriteLine("Receiving upload link from yandex.disk...");
+        private void Download(DownloadOptions options)
+        {
+            SyncAwait(new Download(CreateDiskClient(options)).ExecuteAsync(options));
+        }
 
-            var link = SyncAwait(diskClient.Files.GetUploadLinkAsync(options.Target, true));
-
-            var sourceFileName = Path.Combine(Directory.GetCurrentDirectory(), options.Source);
-
-            Console.WriteLine($"Uploading '{sourceFileName}' to yandex.disk...");
-
-            using (var fileStream = File.OpenRead(sourceFileName))
-            {
-                SyncAwait(diskClient.Files.UploadAsync(link, fileStream));
+        protected virtual DiskHttpApi CreateDiskClient(OptionsBase options) {
+            if (String.IsNullOrWhiteSpace(options.AccessToken)) {
+                throw new Exception("AccessToken is not defined.");
             }
 
-            Console.WriteLine($"File '{sourceFileName}' was successfully to '{options.Target}' on yandex.disk.");
+            return new DiskHttpApi(options.AccessToken);
         }
 
-        private static void Download(DownloadOptions options)
-        {
-            var diskClient = new DiskHttpApi(options.AccessToken);
-
-            Console.WriteLine($"Receiving resource info from yandex.disk...");
-
-            var resource = SyncAwait(diskClient.MetaInfo.GetInfoAsync(new Protocol.ResourceRequest() { Path = options.Source }));
-            if (resource == null)
-                throw new Exception($"Resource {options.Source} does not exist on disk");
-
-            Console.WriteLine($"Receiving download link from yandex.disk...");
-
-            var link = SyncAwait(diskClient.Files.GetDownloadLinkAsync(options.Source));
-
-            Console.WriteLine($"Dowloading '{options.Source}' from yandex.disk...");
-
-            var targetDirectory = Path.Combine(Directory.GetCurrentDirectory(), options.Target);
-
-            using (var downloadStream = SyncAwait(diskClient.Files.DownloadAsync(link)))
-            {               
-                switch (resource.Type)
-                {
-                    case Protocol.ResourceType.Dir:
-                        if (options.Unzip)
-                            SaveStreamToDirectory(downloadStream, targetDirectory);
-                        else
-                            SaveStreamToFile(downloadStream, Path.Combine(targetDirectory, resource.Name + ".zip"));
-                        Console.WriteLine($"Directory '{options.Source}' was successfully saved in '{targetDirectory}'.");
-                        break;
-                    case Protocol.ResourceType.File:
-                        SaveStreamToFile(downloadStream, Path.Combine(targetDirectory, resource.Name));
-                        Console.WriteLine($"File '{options.Source}' was successfully saved in '{targetDirectory}'.");
-                        break;
-                }
-            }
-        }
-
-        private static void SaveStreamToDirectory(Stream downloadStream, string targetDirectory)
-        {
-            ZipArchive archive = new ZipArchive(downloadStream, ZipArchiveMode.Read);
-            archive.ExtractToDirectory(targetDirectory);
-        }
-
-        private static void SaveStreamToFile(Stream downloadStream, string fileName)
-        {
-            using (var fileStream = File.OpenWrite(fileName))
-            {
-                downloadStream.CopyTo(fileStream);
-            }
-        }
-
-        private static TResult SyncAwait<TResult>(Task<TResult> task)
-        {
-            task.Wait();
-            return task.Result;
-        }
-
-        private static void SyncAwait(Task task)
+        private void SyncAwait(Task task)
         {
             task.Wait();
         }

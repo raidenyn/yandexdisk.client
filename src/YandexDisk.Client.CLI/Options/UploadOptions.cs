@@ -3,7 +3,7 @@
 namespace YandexDisk.Client.CLI
 {
     [Verb("upload")]
-    class UploadOptions : OptionsBase
+    public class UploadOptions : OptionsBase
     {
         [Value(1, HelpText = "Local file or directory")]
         public string Source { get; set; }

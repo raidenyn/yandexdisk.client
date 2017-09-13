@@ -2,7 +2,7 @@
 
 namespace YandexDisk.Client.CLI
 {
-    class OptionsBase
+    public class OptionsBase
     {
         [Option('t', "access-token", Required = true, HelpText = "Yandex application access-token")]
         public string AccessToken { get; set; }

@@ -3,7 +3,7 @@
 namespace YandexDisk.Client.CLI
 {
     [Verb("download")]
-    class DownloadOptions : OptionsBase
+    public class DownloadOptions : OptionsBase
     {
         [Value(1, HelpText = "File or directory on Yandex.Disk")]
         public string Source { get; set; }

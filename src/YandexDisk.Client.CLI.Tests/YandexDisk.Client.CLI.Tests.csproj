@@ -1,17 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{6C5F5691-F879-4825-8217-182AB5E422F2}</ProjectGuid>
+    <ProjectGuid>{EEA3CB10-92EF-4327-8E59-381DE7AADD01}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>YandexDisk.Client.Tests</RootNamespace>
-    <AssemblyName>YandexDisk.Client.Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <RootNamespace>YandexDisk.Client.CLI.Tests</RootNamespace>
+    <AssemblyName>YandexDisk.Client.CLI.Tests</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -44,29 +43,32 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Polyfils\UriPolyfils.cs" />
+    <Compile Include="TestHttpClient.cs" />
+    <Compile Include="TestYandexDiskCliProgram.cs" />
+    <Compile Include="DownloadCommandTests.cs" />
+    <Compile Include="UploadCommandTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\YandexDisk.Client.Net45\YandexDisk.Client.Net45.csproj">
-      <Project>{932cdbbd-d1fa-4055-8253-d23cb8c7920b}</Project>
-      <Name>YandexDisk.Client.Net45</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\YandexDisk.Client.CLI\YandexDisk.Client.CLI.csproj">
+      <Project>{eef25acf-1d9e-49ec-a00c-3cd1a0ce8951}</Project>
+      <Name>YandexDisk.Client.CLI</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\YandexDisk.Client.Net45\YandexDisk.Client.Net45.csproj">
+      <Project>{932cdbbd-d1fa-4055-8253-d23cb8c7920b}</Project>
+      <Name>YandexDisk.Client.Net45</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\YandexDisk.Client.Tests.Net45\YandexDisk.Client.Tests.Net45.csproj">
+      <Project>{6c5f5691-f879-4825-8217-182ab5e422f2}</Project>
+      <Name>YandexDisk.Client.Tests.Net45</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
-  <Import Project="..\YandexDisk.Client.Tests\YandexDisk.Client.Tests.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>
