@@ -43,6 +43,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="TestFiles.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TestFiles.resx</DependentUpon>
+    </Compile>
     <Compile Include="TestHttpClient.cs" />
     <Compile Include="TestYandexDiskCliProgram.cs" />
     <Compile Include="DownloadCommandTests.cs" />
@@ -52,6 +57,7 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+    <None Include="Resources\folder.zip" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\YandexDisk.Client.CLI\YandexDisk.Client.CLI.csproj">
@@ -69,6 +75,12 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="TestFiles.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>TestFiles.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

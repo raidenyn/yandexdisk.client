@@ -56,7 +56,7 @@ namespace YandexDisk.Client.CLI
 
         private void SaveStreamToDirectory(Stream downloadStream, string targetDirectory)
         {
-            ZipArchive archive = new ZipArchive(downloadStream, ZipArchiveMode.Read);
+            var archive = new ZipArchive(downloadStream, ZipArchiveMode.Read);
             archive.ExtractToDirectory(targetDirectory);
         }
 

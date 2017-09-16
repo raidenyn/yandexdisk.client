@@ -14,25 +14,25 @@ namespace YandexDisk.Client.CLI.Tests
                 new TestHttpClient((request) => {
                     if (request.RequestUri.ToString() == "https://downloader.dst.yandex.ru/disk/abc")
                     {
-                        return @"Test file content";
+                        return new ResponseContent { Text = "Test folder content" };
                     }
                     
                     if (request.RequestUri.ToString().Contains("download")) {
-                        return @"
+                        return new ResponseContent { Text = @"
                         {
                           ""href"": ""https://downloader.dst.yandex.ru/disk/abc"",
                           ""method"": ""GET"",
                           ""templated"": false
                         }
-                        ";
+                        " };
                     }
 
                     if (request.RequestUri.ToString().Contains("resource"))
                     {
-                        return @"{
+                        return new ResponseContent { Text = @"{
                           ""name"": ""foo"",
                           ""type"": ""dir""
-                        }";
+                        }" };
                     }
 
                     throw new Exception("Unknown function call");
@@ -57,32 +57,84 @@ namespace YandexDisk.Client.CLI.Tests
         }
 
         [Test]
+        public void DownloadUnzippedFolderTest()
+        {
+            var program = new TestYandexDiskCliProgram(
+                new TestHttpClient((request) => {
+                    if (request.RequestUri.ToString() == "https://downloader.dst.yandex.ru/disk/abc")
+                    {
+                        return new ResponseContent { Bites = TestFiles.folder };
+                    }
+
+                    if (request.RequestUri.ToString().Contains("download"))
+                    {
+                        return new ResponseContent { Text = @"
+                        {
+                          ""href"": ""https://downloader.dst.yandex.ru/disk/abc"",
+                          ""method"": ""GET"",
+                          ""templated"": false
+                        }
+                        " };
+                    }
+
+                    if (request.RequestUri.ToString().Contains("resource"))
+                    {
+                        return new ResponseContent { Text = @"{
+                          ""name"": ""test"",
+                          ""type"": ""dir""
+                        }" };
+                    }
+
+                    throw new Exception("Unknown function call");
+                })
+            );
+
+            var tempFolder = Path.GetTempPath();
+            var folder = "/test";
+            var target = tempFolder + folder;
+
+            int result = program.Run(new[] {
+                "download",
+                "-t", "access-tocken",
+                "-u",
+                folder,
+                tempFolder
+            });
+
+            Assert.AreEqual(0, result);
+            Assert.IsTrue(Directory.Exists(target), "New folder should exist");
+            Assert.IsFalse(File.Exists(target + ".zip"), "Temp file should not exist");
+
+            Directory.Delete(target, recursive: true);
+        }
+
+        [Test]
         public void DownloadFileTest()
         {
             var program = new TestYandexDiskCliProgram(
                 new TestHttpClient((request) => {
                     if (request.RequestUri.ToString() == "https://downloader.dst.yandex.ru/disk/abc")
                     {
-                        return @"Test file content";
+                        return new ResponseContent { Text = @"Test file content" };
                     }
 
                     if (request.RequestUri.ToString().Contains("download"))
                     {
-                        return @"
+                        return new ResponseContent { Text = @"
                         {
                           ""href"": ""https://downloader.dst.yandex.ru/disk/abc"",
                           ""method"": ""GET"",
                           ""templated"": false
                         }
-                        ";
+                        " };
                     }
 
                     if (request.RequestUri.ToString().Contains("resource"))
                     {
-                        return @"{
+                        return new ResponseContent { Text = @"{
                           ""name"": ""foo"",
                           ""type"": ""file""
-                        }";
+                        }" };
                     }
 
                     throw new Exception("Unknown function call");

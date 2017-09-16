@@ -14,18 +14,18 @@ namespace YandexDisk.Client.CLI.Tests
             var program = new TestYandexDiskCliProgram(
                 new TestHttpClient((request) => {
                     if (request.Method == HttpMethod.Get) {
-                        return @"
+                        return new ResponseContent { Text = @"
                         {
                           ""href"": ""https://uploader1d.dst.yandex.net:443/upload-target/..."",
                           ""method"": ""PUT"",
                           ""templated"": false
                         }
-                        ";
+                        " };
                     }
 
                     if (request.Method == HttpMethod.Put)
                     {
-                        return @"";
+                        return new ResponseContent { Text = "" };
                     }
 
                     throw new Exception("Unknown function call");

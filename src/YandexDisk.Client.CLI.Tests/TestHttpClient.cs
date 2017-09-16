@@ -14,11 +14,11 @@ namespace YandexDisk.Client.Tests
         public static readonly string BaseUrl = "http://ya.ru/api/";
         public static readonly string ApiKey = "test-api-key";
 
-        private readonly Func<HttpRequestMessage, string> _send;
+        private readonly Func<HttpRequestMessage, ResponseContent> _send;
         private readonly HttpStatusCode _httpStatusCode;
 
         public TestHttpClient(
-            Func<HttpRequestMessage, string> send,
+            Func<HttpRequestMessage, ResponseContent> send,
             HttpStatusCode httpStatusCode = HttpStatusCode.OK
         ) {
             _send = send;
@@ -32,11 +32,31 @@ namespace YandexDisk.Client.Tests
 
                 return new HttpResponseMessage(_httpStatusCode)
                 {
-                    Content = new StringContent(result, Encoding.UTF8, "text/json")
+                    Content = GetHttpContent(result)
                 };
             });
         }
 
+        private HttpContent GetHttpContent(ResponseContent content)
+        {
+            if (!String.IsNullOrEmpty(content.Text)) {
+                return new StringContent(content.Text, Encoding.UTF8, "text/json");
+            }
+
+            if (content.Bites != null)
+            {
+                return new ByteArrayContent(content.Bites);
+            }
+
+            return new StringContent(String.Empty, Encoding.UTF8, "text/json");
+        }
+
         public void Dispose() { }
+    }
+
+    internal struct ResponseContent {
+        public string Text { get; set; }
+
+        public byte[] Bites { get; set; }
     }
 }
