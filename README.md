@@ -2,7 +2,7 @@
 
 [Yandex Disk Rest API](https://tech.yandex.ru/disk/rest/) client library for .NET 4.0 and 4.6
 
-[![yandexdisk-client MyGet Build Status](https://www.myget.org/BuildSource/Badge/yandexdisk-client?identifier=8a8dfc85-9089-404c-a42e-93dabef1cb25)](https://www.myget.org/)
+[![Build status](https://ci.appveyor.com/api/projects/status/tiranp5ojj9ivfeb/branch/master?svg=true)](https://ci.appveyor.com/project/raidenyn/yandexdisk-client/branch/master)
 
 ## How to install
 
