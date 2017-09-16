@@ -1,12 +1,15 @@
-﻿@echo Off
+@echo Off
 set config=%1
 if "%config%" == "" (
    set config=Release
 )
 
-set version=
-if not "%PackageVersion%" == "" (
-   set version=-Version %PackageVersion%
+if "%NuGet%" == "" (
+    set NuGet=nuget
+)
+
+if "%MsBuildExe%" == "" (
+    set MsBuildExe=msbuild
 )
 
 REM Package restore
@@ -14,10 +17,8 @@ call %NuGet% restore src\YandexDisk.Client.Net40\packages.config -OutputDirector
 call %NuGet% restore src\YandexDisk.Client.Net45\packages.config -OutputDirectory %cd%\src\packages -NonInteractive
 call %NuGet% restore src\YandexDisk.Client.Tests.Net40\packages.config -OutputDirectory %cd%\src\packages -NonInteractive
 call %NuGet% restore src\YandexDisk.Client.Tests.Net45\packages.config -OutputDirectory %cd%\src\packages -NonInteractive
+call %NuGet% restore src\YandexDisk.Client.CLI\packages.config -OutputDirectory %cd%\src\packages -NonInteractive
+call %NuGet% restore src\YandexDisk.Client.CLI.Tests\packages.config -OutputDirectory %cd%\src\packages -NonInteractive
 
 REM Build
 "%MsBuildExe%" src\YandexDisk.Client.sln /p:Configuration="%config%" /m /v:M /fl /flp:LogFile=msbuild.log;Verbosity=Normal /nr:false
-
-REM Package
-mkdir Build
-call %nuget% pack "src\YandexDisk.Client.nuspec" -symbols -o Build -p Configuration=%config% %version%
