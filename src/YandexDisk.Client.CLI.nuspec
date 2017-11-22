@@ -28,6 +28,7 @@ Copyright (c) 2015-2017 Yuriy Nagaev</summary>
         <file src="YandexDisk.Client.CLI\bin\Release\Newtonsoft.Json.dll" target="tools\net46\Newtonsoft.Json.dll" />
         <file src="YandexDisk.Client.CLI\bin\Release\System.Net.Http.Formatting.dll" target="tools\net46\System.Net.Http.Formatting.dll" />
         <file src="YandexDisk.Client.CLI\bin\Release\yadisk.exe" target="tools\net46\yadisk.exe" />
+        <file src="YandexDisk.Client.CLI\bin\Release\yadisk.exe.config" target="tools\net46\yadisk.exe.config" />
         <file src="YandexDisk.Client.CLI\bin\Release\YandexDisk.Client.dll" target="tools\net46\YandexDisk.Client.dll" />
     </files>
 </package>
