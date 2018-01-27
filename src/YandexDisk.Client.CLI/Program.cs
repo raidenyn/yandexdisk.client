@@ -32,7 +32,9 @@ namespace YandexDisk.Client.CLI
             {
                 Console.Error.WriteLine(ex.Message);
                 foreach (var innerException in ex.InnerExceptions)
+                {
                     Console.Error.WriteLine(innerException.Message);
+                }
                 return -1;
             }
             catch (Exception ex)
