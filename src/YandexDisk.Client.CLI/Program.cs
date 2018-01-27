@@ -28,6 +28,15 @@ namespace YandexDisk.Client.CLI
 
                 return 0;
             }
+            catch (AggregateException ex)
+            {
+                Console.Error.WriteLine(ex.Message);
+                foreach (var innerException in ex.InnerExceptions)
+                {
+                    Console.Error.WriteLine(innerException.Message);
+                }
+                return -1;
+            }
             catch (Exception ex)
             {
                 Console.Error.WriteLine(ex.Message);
