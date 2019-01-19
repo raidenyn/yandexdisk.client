@@ -1,0 +1,46 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>
+      netstandard2.0;
+      net46;
+      net47;
+    </TargetFrameworks>
+    <LangVersion>latest</LangVersion>
+    <Version>0.0.0-dev</Version>
+    <Product>Yandex Disk RestAPI Client for .NET</Product>
+    <Description>.NET library wrapper of Yandex Desktop RestAPI.
+See https://tech.yandex.ru/disk/</Description>
+    <Authors>Yuriy Nagaev</Authors>
+    <Company />
+    <PackageLicenseUrl>https://github.com/raidenyn/yandexdisk.client/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/raidenyn/yandexdisk.client</PackageProjectUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/raidenyn/yandexdisk.client/master/icon.png</PackageIconUrl>
+    <Copyright>Copyright (c) 2015-2019 Yuriy Nagaev</Copyright>
+    <PackageTags>yandex, disk, cloud disk, client</PackageTags>
+    <RepositoryUrl>https://github.com/raidenyn/yandexdisk.client</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <SignAssembly>true</SignAssembly>
+    <DelaySign>false</DelaySign>
+    <AssemblyOriginatorKeyFile>YandexDisk.Sign.Key.pfx</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">
+    <DocumentationFile>$(TargetDir)\YandexDisk.Client.xml</DocumentationFile>
+    <NoWarn>1701;1702;NU5125</NoWarn>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.0|AnyCPU'">
+    <DocumentationFile>$(TargetDir)\YandexDisk.Client.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="JetBrains.Annotations" Version="2018.3.0">
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.7" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
+  </ItemGroup>
+
+</Project>

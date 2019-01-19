@@ -60,13 +60,8 @@ namespace YandexDisk.Client.Http
         [NotNull]
         private Uri GetUrl([NotNull] string relativeUrl, [CanBeNull] object request = null)
         {
-            if (relativeUrl == null)
-            {
-                throw new ArgumentNullException(nameof(relativeUrl));
-            }
-
             var uriBuilder = new UriBuilder(_baseUrl);
-            uriBuilder.Path += relativeUrl;
+            uriBuilder.Path += relativeUrl ?? throw new ArgumentNullException(nameof(relativeUrl));
 
             if (request != null)
             {
@@ -130,8 +125,7 @@ namespace YandexDisk.Client.Http
 
             //If response is ProtocolObjectResponse, 
             //add HttpStatusCode to response
-            var protocolObject = response as ProtocolObjectResponse;
-            if (protocolObject != null)
+            if (response is ProtocolObjectResponse protocolObject)
             {
                 protocolObject.HttpStatusCode = responseMessage.StatusCode;
             }

@@ -1,8 +1,8 @@
 ﻿using System.Linq;
 
-namespace YandexDisk.Client.Tests.Polyfils
+namespace YandexDisk.Client.Tests
 {
-    public static class UriPf
+    public static class Url
     {
         /// <summary>
         /// Polyfils for different escaping behavior in .NET 4.0 and 4.5

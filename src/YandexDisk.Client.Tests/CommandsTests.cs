@@ -1,10 +1,10 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using YandexDisk.Client.Http;
 using YandexDisk.Client.Protocol;
-using YandexDisk.Client.Tests.Polyfils;
 
 namespace YandexDisk.Client.Tests
 {
@@ -14,8 +14,8 @@ namespace YandexDisk.Client.Tests
         public async Task CreateDictionaryTest()
         {
             var httpClientTest = new TestHttpClient(
-                methodName: "PUT", 
-                url: TestHttpClient.BaseUrl + UriPf.EscapePath("resources?path=/foo"), 
+                methodName: "PUT",
+                url: TestHttpClient.BaseUrl + Url.EscapePath("resources?path=/foo"),
                 httpStatusCode: HttpStatusCode.OK, 
                 result: @"
 {
@@ -43,7 +43,7 @@ namespace YandexDisk.Client.Tests
         {
             var httpClientTest = new TestHttpClient(
                 methodName: "POST", 
-                url: TestHttpClient.BaseUrl + UriPf.EscapePath("resources/copy?from=/foo&path=/baz&overwrite=false"), 
+                url: TestHttpClient.BaseUrl + Url.EscapePath("resources/copy?from=/foo&path=/baz&overwrite=false"), 
                 httpStatusCode: HttpStatusCode.Accepted, 
                 result: @"
 {
@@ -75,7 +75,7 @@ namespace YandexDisk.Client.Tests
         {
             var httpClientTest = new TestHttpClient(
                 methodName: "POST",
-                url: TestHttpClient.BaseUrl + UriPf.EscapePath("resources/move?from=/foo&path=/baz&overwrite=true"),
+                url: TestHttpClient.BaseUrl + Url.EscapePath("resources/move?from=/foo&path=/baz&overwrite=true"),
                 httpStatusCode: HttpStatusCode.Accepted,
                 result: @"
 {
@@ -108,7 +108,7 @@ namespace YandexDisk.Client.Tests
         {
             var httpClientTest = new TestHttpClient(
                 methodName: "DELETE",
-                url: TestHttpClient.BaseUrl + UriPf.EscapePath("resources?path=/foo&permanently=false"), 
+                url: TestHttpClient.BaseUrl + Url.EscapePath("resources?path=/foo&permanently=false"), 
                 httpStatusCode: HttpStatusCode.Accepted, 
                 result: @"
 {
@@ -139,7 +139,7 @@ namespace YandexDisk.Client.Tests
         {
             var httpClientTest = new TestHttpClient(
                 methodName: "DELETE",
-                url: TestHttpClient.BaseUrl + UriPf.EscapePath("trash/resources?path=/foo"),
+                url: TestHttpClient.BaseUrl + Url.EscapePath("trash/resources?path=/foo"),
                 httpStatusCode: HttpStatusCode.Accepted, 
                 result: @"
 {
@@ -167,7 +167,7 @@ namespace YandexDisk.Client.Tests
         {
             var httpClientTest = new TestHttpClient(
                 methodName: "PUT",
-                url: TestHttpClient.BaseUrl + UriPf.EscapePath("trash/resources?path=/foo&name=baz&overwrite=false"),
+                url: TestHttpClient.BaseUrl + Url.EscapePath("trash/resources?path=/foo&name=baz&overwrite=false"),
                 httpStatusCode: HttpStatusCode.OK,
                 result: @"
 {
