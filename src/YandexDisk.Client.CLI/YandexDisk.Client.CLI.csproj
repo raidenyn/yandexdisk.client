@@ -16,10 +16,7 @@
     <RepositoryType>git</RepositoryType>
     <PackageTags>yandex, disk, cloud disk, client, cli</PackageTags>
     <Copyright>Copyright (c) 2015-2019 Yuriy Nagaev</Copyright>
-    <Description>.NET CLI for Yandex Desktop.
-</Description>
-    <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>YandexDisk.Sign.Key.pfx</AssemblyOriginatorKeyFile>
+    <Description>.NET CLI for Yandex Desktop.</Description>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
