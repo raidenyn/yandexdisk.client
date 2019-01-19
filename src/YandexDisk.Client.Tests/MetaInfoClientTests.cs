@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using NUnit.Framework;
 using YandexDisk.Client.Http;
 using YandexDisk.Client.Protocol;
-using YandexDisk.Client.Tests.Polyfils;
 
 namespace YandexDisk.Client.Tests
 {
@@ -54,7 +53,7 @@ namespace YandexDisk.Client.Tests
         {
             var httpClientTest = new TestHttpClient(
                 methodName: "GET", 
-                url: TestHttpClient.BaseUrl + UriPf.EscapePath("resources?sort=name&path=/&limit=20&offset=0"), 
+                url: TestHttpClient.BaseUrl + Url.EscapePath("resources?sort=name&path=/&limit=20&offset=0"), 
                 httpStatusCode: HttpStatusCode.OK,
                 result: @"
 {
@@ -152,7 +151,7 @@ namespace YandexDisk.Client.Tests
         {
             var httpClientTest = new TestHttpClient(
                 methodName: "GET",
-                url: TestHttpClient.BaseUrl + UriPf.EscapePath("trash/resources?path=/foo/cat.png&limit=30&offset=50"),
+                url: TestHttpClient.BaseUrl + Url.EscapePath("trash/resources?path=/foo/cat.png&limit=30&offset=50"),
                 httpStatusCode: HttpStatusCode.OK,
                 result: @"
 {
@@ -201,7 +200,7 @@ namespace YandexDisk.Client.Tests
         {
             var httpClientTest = new TestHttpClient(
                 methodName: "GET", 
-                url: TestHttpClient.BaseUrl + UriPf.EscapePath(@"resources/files?media_type=""audio,compressed""&limit=30&offset=50"),
+                url: TestHttpClient.BaseUrl + Url.EscapePath(@"resources/files?media_type=""audio,compressed""&limit=30&offset=50"),
                 httpStatusCode: HttpStatusCode.OK,
                 result: @"
 {
@@ -280,7 +279,7 @@ namespace YandexDisk.Client.Tests
         {
             var httpClientTest = new TestHttpClient(
                 methodName: "GET", 
-                url: TestHttpClient.BaseUrl + UriPf.EscapePath(@"resources/last-uploaded?media_type=""audio,executable""&limit=20"), 
+                url: TestHttpClient.BaseUrl + Url.EscapePath(@"resources/last-uploaded?media_type=""audio,executable""&limit=20"), 
                 httpStatusCode: HttpStatusCode.OK,
                 result: @"
 {
@@ -357,7 +356,7 @@ namespace YandexDisk.Client.Tests
         {
             var httpClientTest = new TestHttpClient(
                 methodName: "PATCH",
-                url: TestHttpClient.BaseUrl + UriPf.EscapePath(@"resources?path=/foo"),
+                url: TestHttpClient.BaseUrl + Url.EscapePath(@"resources?path=/foo"),
                 httpStatusCode: HttpStatusCode.OK,
                 request: @"{""custom_properties"":{""foo"":""1"",""bar"":""2""}}",
                 result: @"
