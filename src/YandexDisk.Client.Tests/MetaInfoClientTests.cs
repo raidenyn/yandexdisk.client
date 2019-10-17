@@ -200,7 +200,7 @@ namespace YandexDisk.Client.Tests
         {
             var httpClientTest = new TestHttpClient(
                 methodName: "GET", 
-                url: TestHttpClient.BaseUrl + Url.EscapePath(@"resources/files?media_type=""audio,compressed""&limit=30&offset=50"),
+                url: TestHttpClient.BaseUrl + Url.EscapePath(@"resources/files?media_type=audio,compressed&limit=30&offset=50"),
                 httpStatusCode: HttpStatusCode.OK,
                 result: @"
 {
@@ -279,7 +279,7 @@ namespace YandexDisk.Client.Tests
         {
             var httpClientTest = new TestHttpClient(
                 methodName: "GET", 
-                url: TestHttpClient.BaseUrl + Url.EscapePath(@"resources/last-uploaded?media_type=""audio,executable""&limit=20"), 
+                url: TestHttpClient.BaseUrl + Url.EscapePath(@"resources/last-uploaded?media_type=audio,executable&limit=20"), 
                 httpStatusCode: HttpStatusCode.OK,
                 result: @"
 {

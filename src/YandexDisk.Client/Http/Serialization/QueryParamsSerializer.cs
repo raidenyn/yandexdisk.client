@@ -143,7 +143,7 @@ namespace YandexDisk.Client.Http.Serialization
         {
             var values = from object item in enumerable select SerializeValue(enumerableType, item);
 
-            return "\"" + String.Join(",", values) + "\"";
+            return String.Join(",", values);
         }
         #endregion
 
