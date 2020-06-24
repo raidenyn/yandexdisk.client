@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using JetBrains.Annotations;
 using YandexDisk.Client.Clients;
 using YandexDisk.Client.Protocol;
 
@@ -40,6 +41,15 @@ namespace YandexDisk.Client.Http.Clients
         public Task<Resource> AppendCustomProperties(string path, IDictionary<string, string> customProperties, CancellationToken cancellationToken = default(CancellationToken))
         {
             return PatchAsync<object, object, Resource>("resources", new { path }, new { customProperties }, cancellationToken);
+        }
+        public Task<Link> PublishFolderAsync([NotNull]  string path, CancellationToken cancellationToken = default)
+        {
+            return PutAsync<object, object, Link>("resources/publish", new { path }, /*requestBody*/ null, cancellationToken);
+        }
+
+        public Task<Link> UnpublishFolderAsync([NotNull] string path, CancellationToken cancellationToken = default)
+        {
+            return PutAsync<object, object, Link>("resources/unpublish", new { path }, /*requestBody*/ null, cancellationToken);
         }
     }
 }
