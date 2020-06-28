@@ -43,12 +43,12 @@ namespace YandexDisk.Client.Http.Clients
             return PatchAsync<object, object, Resource>("resources", new { path }, new { customProperties }, cancellationToken);
         }
         
-        public Task<Link> PublishFolderAsync([NotNull]  string path, CancellationToken cancellationToken = default)
+        public Task<Link> PublishFolderAsync(string path, CancellationToken cancellationToken = default)
         {
             return PutAsync<object, object, Link>("resources/publish", new { path }, /*requestBody*/ null, cancellationToken);
         }
 
-        public Task<Link> UnpublishFolderAsync([NotNull] string path, CancellationToken cancellationToken = default)
+        public Task<Link> UnpublishFolderAsync(string path, CancellationToken cancellationToken = default)
         {
             return PutAsync<object, object, Link>("resources/unpublish", new { path }, /*requestBody*/ null, cancellationToken);
         }
