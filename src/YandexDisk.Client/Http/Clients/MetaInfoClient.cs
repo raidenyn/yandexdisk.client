@@ -42,6 +42,7 @@ namespace YandexDisk.Client.Http.Clients
         {
             return PatchAsync<object, object, Resource>("resources", new { path }, new { customProperties }, cancellationToken);
         }
+        
         public Task<Link> PublishFolderAsync([NotNull]  string path, CancellationToken cancellationToken = default)
         {
             return PutAsync<object, object, Link>("resources/publish", new { path }, /*requestBody*/ null, cancellationToken);
