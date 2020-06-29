@@ -413,5 +413,59 @@ namespace YandexDisk.Client.Tests
             Assert.AreEqual("1", result.CustomProperties["foo"]);
             Assert.AreEqual("2", result.CustomProperties["bar"]);
         }
+        [Test]
+        public async Task PublishFolderTestAsync()
+        {
+            var httpClientTest = new TestHttpClient(
+                   methodName: "PUT",
+                   url: TestHttpClient.BaseUrl + Url.EscapePath(@"resources/publish?path=/foo"),
+                   httpStatusCode: HttpStatusCode.OK,
+                   result: @"
+{
+  ""href"": ""https://cloud-api.yandex.net/v1/disk/resources?path=disk%3A%2Fbar%2Fphoto.png"",
+  ""method"": ""GET"",
+  ""templated"": false
+}
+");
+
+            var diskClient = new DiskHttpApi(TestHttpClient.BaseUrl,
+                                             TestHttpClient.ApiKey,
+                                             logSaver: null,
+                                             httpClient: httpClientTest);
+
+            Link result = await diskClient.MetaInfo.PublishFolderAsync("/foo", cancellationToken : CancellationToken.None);
+
+            Assert.NotNull(result);
+            Assert.IsNotEmpty(result.Href);
+            
+           
+        }
+        [Test]
+        public async Task UnpublishFolderTestAsync()
+        {
+            var httpClientTest = new TestHttpClient(
+                   methodName: "PUT",
+                   url: TestHttpClient.BaseUrl + Url.EscapePath(@"resources/unpublish?path=/foo"),
+                   httpStatusCode: HttpStatusCode.OK,
+                   result: @"
+{
+  ""href"": ""https://cloud-api.yandex.net/v1/disk/resources?path=disk%3A%2Fbar%2Fphoto.png"",
+  ""method"": ""GET"",
+  ""templated"": false
+}
+");
+
+            var diskClient = new DiskHttpApi(TestHttpClient.BaseUrl,
+                                             TestHttpClient.ApiKey,
+                                             logSaver: null,
+                                             httpClient: httpClientTest);
+
+            Link result = await diskClient.MetaInfo.UnpublishFolderAsync("/foo", cancellationToken: CancellationToken.None);
+
+            Assert.NotNull(result);
+            Assert.IsNotEmpty(result.Href);
+
+
+        }
     }
 }
