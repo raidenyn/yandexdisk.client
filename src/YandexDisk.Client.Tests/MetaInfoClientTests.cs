@@ -436,10 +436,11 @@ namespace YandexDisk.Client.Tests
             Link result = await diskClient.MetaInfo.PublishFolderAsync("/foo", cancellationToken : CancellationToken.None);
 
             Assert.NotNull(result);
-            Assert.IsNotEmpty(result.Href);
-            
-           
+            Assert.AreEqual("https://cloud-api.yandex.net/v1/disk/resources?path=disk%3A%2Fbar%2Fphoto.png", result.Href);
+            Assert.AreEqual("GET", result.Method);
+            Assert.AreEqual(false, result.Templated);
         }
+
         [Test]
         public async Task UnpublishFolderTestAsync()
         {
@@ -463,9 +464,9 @@ namespace YandexDisk.Client.Tests
             Link result = await diskClient.MetaInfo.UnpublishFolderAsync("/foo", cancellationToken: CancellationToken.None);
 
             Assert.NotNull(result);
-            Assert.IsNotEmpty(result.Href);
-
-
+            Assert.AreEqual("https://cloud-api.yandex.net/v1/disk/resources?path=disk%3A%2Fbar%2Fphoto.png", result.Href);
+            Assert.AreEqual("GET", result.Method);
+            Assert.AreEqual(false, result.Templated);
         }
     }
 }
