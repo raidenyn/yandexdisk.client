@@ -42,5 +42,15 @@ namespace YandexDisk.Client.Clients
         /// Append custom properties to resource
         /// </summary>
         Task<Resource> AppendCustomProperties([NotNull] string path, [NotNull] IDictionary<string, string> properties, CancellationToken cancellationToken = default(CancellationToken));
+        
+        /// <summary>
+        /// Publish resource
+        /// </summary>
+        Task<Link> PublishFolderAsync([NotNull] string path, CancellationToken cancellationToken = default(CancellationToken));
+        
+        /// <summary>
+        /// Unpublish resource
+        /// </summary>
+        Task<Link> UnpublishFolderAsync([NotNull] string path, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
