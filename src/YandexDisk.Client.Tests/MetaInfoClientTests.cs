@@ -413,6 +413,7 @@ namespace YandexDisk.Client.Tests
             Assert.AreEqual("1", result.CustomProperties["foo"]);
             Assert.AreEqual("2", result.CustomProperties["bar"]);
         }
+
         [Test]
         public async Task PublishFolderTestAsync()
         {
