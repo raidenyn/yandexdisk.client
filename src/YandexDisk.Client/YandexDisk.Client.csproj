@@ -3,8 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>
       netstandard2.0;
-      net46;
-      net47;
+      net6;  
     </TargetFrameworks>
     <LangVersion>latest</LangVersion>
     <Version>0.0.0-dev</Version>
@@ -23,21 +22,20 @@ See https://tech.yandex.ru/disk/</Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|netstandard2.0|AnyCPU'">
-    <DocumentationFile>$(TargetDir)\YandexDisk.Client.xml</DocumentationFile>
-    <NoWarn>1701;1702;NU5125</NoWarn>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DocumentationFile>bin\Debug\YandexDisk.Client.xml</DocumentationFile>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.0|AnyCPU'">
-    <DocumentationFile>$(TargetDir)\YandexDisk.Client.xml</DocumentationFile>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DocumentationFile>bin\Release\YandexDisk.Client.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="JetBrains.Annotations" Version="2018.3.0">
+    <PackageReference Include="JetBrains.Annotations" Version="2022.1.0">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.7" />
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
+    <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.9" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 
 </Project>
